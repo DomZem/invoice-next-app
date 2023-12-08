@@ -20,3 +20,43 @@
     --destructiveHover: #ff9797;
   }
 }
+
+@layer base {
+  body {
+    @apply bg-whisperWhite text-heatherGray dark:bg-darkAbyss dark:text-softLavender;
+  }
+}
+
+@layer utilities {
+  .heading-l-text {
+    @apply text-4xl font-bold leading-normal tracking-[-1.125px];
+  }
+
+  .heading-m-text {
+    @apply text-2xl font-bold leading-normal tracking-[-0.75px];
+  }
+
+  .heading-s-text {
+    @apply text-[15px] font-bold leading-6 tracking-[-0.25px];
+  }
+
+  .heading-s-variant-text {
+    @apply text-[15px] font-bold leading-[100%] tracking-[-0.25px];
+  }
+
+  .body-text {
+    @apply text-[13px] font-medium leading-[138.462%] tracking-[-0.1px];
+  }
+
+  .body-variant-text {
+    @apply text-[13px] font-medium leading-[115.385%] tracking-[-0.1px];
+  }
+
+  .label-text {
+    @apply text-[13px] font-medium leading-[15px] tracking-[-0.1px] text-bluebellGray;
+  }
+
+  .invoice-detail-text {
+    @apply mt-[13px] text-[15px] font-bold leading-[133.333%] tracking-[-0.25px] text-starlessNight dark:text-white;
+  }
+}
