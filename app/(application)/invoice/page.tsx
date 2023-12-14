@@ -1,18 +1,15 @@
 "use client";
 
 import CreateInvoice from "@/components/InvoiceForm/CreateInvoice";
-import { Invoice } from "@/components/InvoiceForm/formSchema";
+import InvoiceList from "@/components/InvoiceList";
 import { Button } from "@/components/ui/Button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/Sheet";
 import { axiosInstance } from "@/lib/axios";
+import { FetchInvoice } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { LuLoader2 } from "react-icons/lu";
-
-type FetchInvoice = Invoice & {
-  id: number;
-};
 
 const fetchInvoices = async () => {
   const response = await axiosInstance.get<FetchInvoice[]>("/invoice", {
@@ -55,7 +52,13 @@ export default function InvoicePage() {
           <h1 className="heading-m-text md:heading-l-text text-starlessNight dark:text-white">
             Invoices
           </h1>
-          <p>No invoices</p>
+          <p>
+            {!data?.length
+              ? "No invoices"
+              : data.length === 1
+                ? "1 invoice"
+                : `${data.length} invoices`}
+          </p>
         </div>
 
         <div className="flex items-center gap-[18px]">
@@ -76,9 +79,7 @@ export default function InvoicePage() {
       {!data?.length ? (
         <p>Empty invoice</p>
       ) : (
-        <ul>
-          <li>{data.length}</li>
-        </ul>
+        <InvoiceList invoicesList={data} />
       )}
     </main>
   );

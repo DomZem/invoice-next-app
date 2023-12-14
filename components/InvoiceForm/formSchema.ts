@@ -28,7 +28,7 @@ export const invoiceFormSchema = z.object({
   clientName: z.string().min(1, msg).max(50),
   clientEmail: z.string().email(),
   date: z.date(),
-  status: z.string(),
+  status: zStatusType,
   paymentTerm: zPaymentType,
   projectDescription: z.string().min(1, msg).max(100),
   items: z.array(itemFormSchema).min(1),
