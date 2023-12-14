@@ -52,7 +52,7 @@ export default function RegisterForm() {
   };
 
   return (
-    <section className="shadow-wrapper w-full max-w-lg rounded-lg bg-white p-6 dark:bg-midnightBlue">
+    <section className="w-full max-w-lg rounded-lg bg-white p-6 shadow-wrapper dark:bg-midnightBlue">
       <h2 className="heading-m-text md:heading-l-text mb-6 text-starlessNight dark:text-white">
         Register
       </h2>

@@ -1,20 +1,20 @@
 import * as z from "zod";
 
 const msg = {
-    message: "Can't be empty",
+  message: "Can't be empty",
 };
 
 const addressFormSchema = z.object({
-    streetName: z.string().min(1, msg).max(100),
-    city: z.string().min(1, msg).max(50),
-    postCode: z.string().min(1, msg).max(10),
-    country: z.string().min(1, msg).max(50),
-})
+  streetName: z.string().min(1, msg).max(100),
+  city: z.string().min(1, msg).max(50),
+  postCode: z.string().min(1, msg).max(10),
+  country: z.string().min(1, msg).max(50),
+});
 
 const itemFormSchema = z.object({
-    name: z.string().min(1, msg).max(50),
-    quantity: z.number().positive(),
-    price: z.number().multipleOf(0.01),
+  name: z.string().min(1, msg).max(50),
+  quantity: z.number().positive(),
+  price: z.number().multipleOf(0.01),
 });
 
 const PAYMENT_TERMS = ["NET_1", "NET_7", "NET_14", "NET_30"] as const;
@@ -24,21 +24,21 @@ const zPaymentType = z.enum(PAYMENT_TERMS);
 const zStatusType = z.enum(STATUS);
 
 export const invoiceFormSchema = z.object({
-    mark: z.string().optional(),
-    clientName: z.string().min(1, msg).max(50),
-    clientEmail: z.string().email(),
-    date: z.date(),
-    status: z.string(),
-    paymentTerm: zPaymentType,
-    projectDescription: z.string().min(1, msg).max(100),
-    items: z.array(itemFormSchema).min(1),
-    billFromAddress: addressFormSchema,
-    billToAddress: addressFormSchema,
+  mark: z.string().optional(),
+  clientName: z.string().min(1, msg).max(50),
+  clientEmail: z.string().email(),
+  date: z.date(),
+  status: z.string(),
+  paymentTerm: zPaymentType,
+  projectDescription: z.string().min(1, msg).max(100),
+  items: z.array(itemFormSchema).min(1),
+  billFromAddress: addressFormSchema,
+  billToAddress: addressFormSchema,
 });
 
 export type Invoice = z.infer<typeof invoiceFormSchema>;
 
-export type Status = z.infer<typeof  zStatusType>
+export type Status = z.infer<typeof zStatusType>;
 
 export type PaymentTerm = z.infer<typeof zPaymentType>;
 
