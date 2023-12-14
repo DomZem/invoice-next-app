@@ -19,6 +19,28 @@
     --destructive: #ec5757;
     --destructiveHover: #ff9797;
   }
+
+  ::-webkit-scrollbar {
+    @apply h-2 w-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-[4px] bg-softLavender;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    ::-webkit-scrollbar-thumb {
+      @apply bg-darkRoyalBlue;
+    }
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--heatherGray);
+  }
 }
 
 @layer base {
