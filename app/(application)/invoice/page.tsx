@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { LuLoader2 } from "react-icons/lu";
+import { MdAddCircle } from "react-icons/md";
 
 const fetchInvoices = async () => {
   const response = await axiosInstance.get<FetchInvoice[]>("/invoice", {
@@ -29,7 +30,6 @@ export default function InvoicePage() {
   const router = useRouter();
 
   if (isLoading) {
-
     return (
       <main className="flex items-center justify-center">
         <LuLoader2 className="animate-spin text-4xl font-bold text-primary" />
@@ -65,8 +65,11 @@ export default function InvoicePage() {
 
         <div className="flex items-center gap-[18px]">
           <Sheet>
-            <Button asChild>
-              <SheetTrigger>New</SheetTrigger>
+            <Button className=" py-[6px] pl-[6px] pr-[15px]" asChild>
+              <SheetTrigger className="flex items-center gap-2">
+                <MdAddCircle className="text-[39px]" />
+                New
+              </SheetTrigger>
             </Button>
             <SheetContent
               side="left"
