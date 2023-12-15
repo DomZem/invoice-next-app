@@ -17,6 +17,18 @@ export const getTotalInvoicePrice = (items: Item[]) => {
   return items.reduce((acc, { price, quantity }) => acc + price * quantity, 0);
 };
 
+export const generateRandomString = (): string => {
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const randomString = Array.from(
+    { length: 2 },
+    () => characters[Math.floor(Math.random() * characters.length)],
+  ).join("");
+  const randomNumber = Math.floor(Math.random() * 10000)
+    .toString()
+    .padStart(4, "0");
+  return randomString + randomNumber;
+};
+
 export const getPaymentTermDays = (paymentTerm: PaymentTerm): number => {
   switch (paymentTerm) {
     case "NET_1":
