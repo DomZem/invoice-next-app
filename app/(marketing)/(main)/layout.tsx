@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/Button";
 import ModeToggle from "@/components/ui/ModeToggle";
+import Logo from "@/public/logo.svg";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function MarketingLayout({
@@ -11,7 +13,12 @@ export default function MarketingLayout({
     <div>
       <header className="fixed left-0 top-0 h-[72px] w-full bg-midnightBlue md:h-20">
         <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-2">
-          <h1 className="heading-l-text text-white">Invoice</h1>
+          <div className="flex items-center gap-3">
+            <div className="rounded-md bg-primary p-3">
+              <Image className="w-7 md:w-[30px]" src={Logo} alt="logo" />
+            </div>
+            <h1 className="heading-m-text text-white">Invoice</h1>
+          </div>
           <div className="flex items-center gap-4">
             <ModeToggle />
             <Button asChild>

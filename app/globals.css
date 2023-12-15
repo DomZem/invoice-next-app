@@ -90,4 +90,12 @@
   .invoice-detail-text {
     @apply mt-[13px] text-[15px] font-bold leading-[133.333%] tracking-[-0.25px] text-starlessNight dark:text-white;
   }
+
+  .logo {
+    @apply relative;
+  }
+
+  .logo::after {
+    @apply absolute bottom-0 right-0 h-1/2 w-full rounded-br-[20px] rounded-tl-[20px] bg-primaryHover content-[""];
+  }
 }
