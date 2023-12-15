@@ -24,6 +24,10 @@ const config: Config = {
         destructiveHover: "var(--destructiveHover)",
       },
     },
+    backgroundImage: {
+      shadow:
+        "linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.10) 100%)",
+    },
     boxShadow: {
       wrapper: "0px 10px 10px -10px rgba(72, 84, 159, 0.10)",
     },
