@@ -30,6 +30,7 @@ const config: Config = {
     },
     boxShadow: {
       wrapper: "0px 10px 10px -10px rgba(72, 84, 159, 0.10)",
+      box: "0px 10px 20px 0px rgba(72, 84, 159, 0.25)",
     },
   },
   plugins: [require("tailwindcss-animate")],

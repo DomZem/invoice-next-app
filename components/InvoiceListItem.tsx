@@ -27,7 +27,7 @@ export function InvoiceListItem({
           <section className="flex items-center justify-between">
             <div>
               <p>Due {format(new Date(date), "d LLL Y")}</p>
-              <p className="text-heading-s mt-[9px] text-starlessNight dark:text-white">
+              <p className="heading-s-text mt-[9px] text-starlessNight dark:text-white">
                 £ {getTotalInvoicePrice(items).toFixed(2)}
               </p>
             </div>
@@ -54,7 +54,7 @@ export function InvoiceListItem({
           </section>
           <p>{clientName}</p>
           <section className="flex items-center">
-            <p className="text-heading-s mr-10 text-starlessNight dark:text-white">
+            <p className="heading-s-text mr-10 text-starlessNight dark:text-white">
               £ {getTotalInvoicePrice(items).toFixed(2)}
             </p>
             <InvoiceStatus status={status} />
