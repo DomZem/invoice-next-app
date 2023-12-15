@@ -1,5 +1,6 @@
 "use client";
 
+import EmptyInvoices from "@/components/EmptyInvoices";
 import CreateInvoice from "@/components/InvoiceForm/CreateInvoice";
 import InvoiceList from "@/components/InvoiceList";
 import { Button } from "@/components/ui/Button";
@@ -77,7 +78,12 @@ export default function InvoicePage() {
       </section>
 
       {!data?.length ? (
-        <p>Empty invoice</p>
+        <EmptyInvoices>
+          <p>Create an invoice by clicking the</p>
+          <p>
+            <span className="font-bold">New</span> button and get started
+          </p>
+        </EmptyInvoices>
       ) : (
         <InvoiceList invoicesList={data} />
       )}
