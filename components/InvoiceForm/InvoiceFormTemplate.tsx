@@ -349,7 +349,7 @@ export default function InvoiceFormTemplate({
 
         {/* Form buttons */}
         <div className="flex-shrink-0">
-          <div className="bg-shadow h-16 w-full"></div>
+          <div className="h-16 w-full bg-shadow"></div>
           <div
             className={`flex items-center gap-2 px-6 py-5 ${
               variant === "create"

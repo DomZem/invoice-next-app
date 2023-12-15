@@ -6,6 +6,7 @@ import { FetchInvoice } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import UpdateInvoice from "./InvoiceForm/UpdateInvoice";
 import InvoiceMarkButton from "./InvoiceMarkButton";
 import {
   AlertDialog,
@@ -69,7 +70,7 @@ export default function InvoiceDetailsActions({
           side="left"
           className="top-[72px] h-[calc(100%-72px)] w-full max-w-[616px] md:top-20 md:h-[calc(100%-5rem)] md:max-w-[719px] md:rounded-r-[20px] lg:top-0 lg:h-full"
         >
-          <p>Update form in future</p>
+          <UpdateInvoice data={data} />
         </SheetContent>
       </Sheet>
 
