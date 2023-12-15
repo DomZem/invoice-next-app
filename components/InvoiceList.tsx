@@ -9,7 +9,7 @@ export default function InvoiceList({ invoicesList }: InvoiceListProps) {
   return (
     <ul className="flex flex-col gap-4 overflow-y-auto">
       {invoicesList.map((invoice) => (
-        <InvoiceListItem invoice={invoice} key={invoice.id} />
+        <InvoiceListItem invoice={invoice} key={invoice.mark} />
       ))}
     </ul>
   );

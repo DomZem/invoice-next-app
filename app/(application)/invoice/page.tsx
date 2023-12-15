@@ -29,6 +29,7 @@ export default function InvoicePage() {
   const router = useRouter();
 
   if (isLoading) {
+
     return (
       <main className="flex items-center justify-center">
         <LuLoader2 className="animate-spin text-4xl font-bold text-primary" />

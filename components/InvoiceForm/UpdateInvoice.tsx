@@ -36,8 +36,8 @@ export default function UpdateInvoice({ data }: UpdateInvoiceProps) {
   });
 
   const handleUpdateInvoice = (formData: Invoice) => {
-    toast.loading(`Upadting ${formData.mark} invoice`, { id: toastId });
-    mutate({ id: data.id, ...formData });
+    toast.loading(`Upadting ${data.mark} invoice`, { id: toastId });
+    mutate({ ...data, ...formData });
   };
 
   return (

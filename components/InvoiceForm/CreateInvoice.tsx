@@ -1,7 +1,5 @@
 "use client";
 
-// import { generateRandomMark } from "@/lib/utils";
-
 import { axiosInstance } from "@/lib/axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
@@ -10,7 +8,6 @@ import InvoiceFormTemplate from "./InvoiceFormTemplate";
 import { Invoice } from "./formSchema";
 
 const defaultValues: Invoice = {
-  mark: "",
   clientName: "",
   clientEmail: "",
   date: new Date(),
@@ -39,11 +36,7 @@ const defaultValues: Invoice = {
 };
 
 const createInvoice = async (data: Invoice) => {
-  return axiosInstance.post(
-    "/invoice",
-    { ...data, mark: "BSX9A67" },
-    { withCredentials: true },
-  );
+  return axiosInstance.post("/invoice", data, { withCredentials: true });
 };
 
 export default function CreateInvoice() {

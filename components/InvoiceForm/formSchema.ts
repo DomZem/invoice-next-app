@@ -24,7 +24,6 @@ const zPaymentType = z.enum(PAYMENT_TERMS);
 const zStatusType = z.enum(STATUS);
 
 export const invoiceFormSchema = z.object({
-  mark: z.string().optional(),
   clientName: z.string().min(1, msg).max(50),
   clientEmail: z.string().email(),
   date: z.date(),
