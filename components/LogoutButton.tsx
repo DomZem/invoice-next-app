@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import { MdLogout } from "react-icons/md";
 
 const logout = async (): Promise<{ message: string }> => {
-  const response = await axiosInstance.get("/autha/logout", {
+  const response = await axiosInstance.get("/auth/logout", {
     withCredentials: true,
   });
 
