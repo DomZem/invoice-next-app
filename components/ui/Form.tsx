@@ -20,6 +20,7 @@ type FormFieldContextValue<
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > = {
   name: TName;
+  disabled: boolean;
 };
 
 const FormFieldContext = React.createContext<FormFieldContextValue>(
@@ -33,7 +34,9 @@ const FormField = <
   ...props
 }: ControllerProps<TFieldValues, TName>) => {
   return (
-    <FormFieldContext.Provider value={{ name: props.name }}>
+    <FormFieldContext.Provider
+      value={{ name: props.name, disabled: props.disabled ?? false }}
+    >
       <Controller {...props} />
     </FormFieldContext.Provider>
   );
@@ -54,6 +57,7 @@ const useFormField = () => {
 
   return {
     id,
+    disabled: fieldContext.disabled,
     name: fieldContext.name,
     formItemId: `${id}-form-item`,
     formDescriptionId: `${id}-form-item-description`,
@@ -89,12 +93,16 @@ const FormLabel = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
 >(({ className, ...props }, ref) => {
-  const { error, formItemId } = useFormField();
+  const { error, formItemId, disabled } = useFormField();
 
   return (
     <Label
       ref={ref}
-      className={cn(error && "text-destructive", className)}
+      className={cn(
+        error && "text-destructive",
+        disabled && "opacity-50",
+        className,
+      )}
       htmlFor={formItemId}
       {...props}
     />

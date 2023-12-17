@@ -76,7 +76,9 @@ export default function InvoiceDetails({ params }: { params: { id: string } }) {
               <div className="flex flex-col gap-[31px]">
                 <div>
                   <p>Invoice Date</p>
-                  <p className="invoice-detail-text">21 Aug 2021</p>
+                  <p className="invoice-detail-text">
+                    {format(new Date(data.date), "d LLL Y")}
+                  </p>
                 </div>
                 <div>
                   <p>Payment Due</p>
@@ -95,10 +97,10 @@ export default function InvoiceDetails({ params }: { params: { id: string } }) {
                 <p className="invoice-detail-text mb-[7px]">
                   {data.clientName}
                 </p>
-                <p>{data.billFromAddress.streetName}</p>
-                <p>{data.billFromAddress.city}</p>
-                <p>{data.billFromAddress.postCode}</p>
-                <p>{data.billFromAddress.country}</p>
+                <p>{data.billToAddress.streetName}</p>
+                <p>{data.billToAddress.city}</p>
+                <p>{data.billToAddress.postCode}</p>
+                <p>{data.billToAddress.country}</p>
               </div>
             </div>
 

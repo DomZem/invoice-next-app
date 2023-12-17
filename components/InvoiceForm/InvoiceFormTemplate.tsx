@@ -260,13 +260,15 @@ export default function InvoiceFormTemplate({
               <FormField
                 control={methods.control}
                 name="date"
+                disabled={variant === "update"}
+                shouldUnregister={variant === "update"}
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
                     <FormLabel>Invoice date</FormLabel>
                     <Popover>
                       <PopoverTrigger disabled={variant === "update"} asChild>
                         <FormControl>
-                          <button className="heading-s-variant-text flex w-full rounded border-[1px] border-softLavender px-5 py-4 text-starlessNight outline-primaryHover dark:border-darkRoyalBlue dark:bg-midnightBlue dark:text-white">
+                          <button className="heading-s-variant-text flex rounded border-[1px] border-softLavender px-5 py-4 text-starlessNight outline-primaryHover disabled:cursor-not-allowed disabled:opacity-50 dark:border-darkRoyalBlue dark:bg-midnightBlue dark:text-white">
                             {field.value ? (
                               format(new Date(field.value), "d LLL Y")
                             ) : (
