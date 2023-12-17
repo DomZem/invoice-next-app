@@ -47,7 +47,9 @@ export default function LoginForm() {
     },
     onError: (err: Error | AxiosError) => {
       if (axios.isAxiosError(err)) {
-        toast.error(`Something went wrong. ${err.response?.data.message}`);
+        toast.error(
+          `Something went wrong. Error: ${err.response?.data.message}`,
+        );
       } else {
         toast.error("Something went wrong. Try maybe later.");
       }

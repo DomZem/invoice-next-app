@@ -1,6 +1,7 @@
 import { axiosInstance } from "@/lib/axios";
 import { FetchInvoice } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios, { AxiosError } from "axios";
 import toast from "react-hot-toast";
 import InvoiceFormTemplate from "./InvoiceFormTemplate";
 import { Invoice } from "./formSchema";
@@ -18,25 +19,27 @@ interface UpdateInvoiceProps {
 export default function UpdateInvoice({ data }: UpdateInvoiceProps) {
   const queryClient = useQueryClient();
 
-  let toastId: string = "toastId";
-
   const { mutate } = useMutation({
-    mutationFn: updateInvoice,
+    mutationFn: (data: FetchInvoice) =>
+      toast.promise(updateInvoice(data), {
+        loading: `Upadting #${data.mark} invoice ...`,
+        success: `Invoice #${data.mark} has been updated 🔥`,
+        error: (error: Error | AxiosError) => {
+          let message = "Something went wrong. Invoice hasn't been updated";
+
+          if (axios.isAxiosError(error)) {
+            return `${message}. Error: ${error.response?.data.message}`;
+          }
+
+          return message;
+        },
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["invoices"] });
-      toast.success(`Invoice ${data.mark} has been updated 🔥`, {
-        id: toastId,
-      });
-    },
-    onError: (error) => {
-      toast.error("Something went wrong. Invoice hasn't been updated", {
-        id: toastId,
-      });
     },
   });
 
   const handleUpdateInvoice = (formData: Invoice) => {
-    toast.loading(`Upadting ${data.mark} invoice`, { id: toastId });
     mutate({ ...data, ...formData });
   };
 

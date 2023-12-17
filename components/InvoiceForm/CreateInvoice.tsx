@@ -42,29 +42,27 @@ const createInvoice = async (data: Invoice) => {
 export default function CreateInvoice() {
   const queryClient = useQueryClient();
 
-  let toastId: string = "invoice";
-
   const { mutate } = useMutation({
-    mutationFn: createInvoice,
+    mutationFn: (data: Invoice) =>
+      toast.promise(createInvoice(data), {
+        loading: "Creating invoice ...",
+        success: `Invoice for ${data.clientName} has been created 🔥`,
+        error: (error: Error | AxiosError) => {
+          let message = "Something went wrong. Invoice hasn't been created";
+
+          if (axios.isAxiosError(error)) {
+            return `${message}. Error: ${error.response?.data.message}`;
+          }
+
+          return message;
+        },
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["invoices"] });
-      toast.success("Invoice has been created 🔥", { id: toastId });
-    },
-    onError: (err: Error | AxiosError) => {
-      if (axios.isAxiosError(err)) {
-        toast.error(`Something went wrong. ${err.response?.data.message}`, {
-          id: toastId,
-        });
-      } else {
-        toast.error("Something went wrong. Invoice hasn't been created", {
-          id: toastId,
-        });
-      }
     },
   });
 
   const handleCreateInvoice = (data: Invoice) => {
-    toast.loading(`Creating invoice`, { id: toastId });
     mutate(data);
   };
 

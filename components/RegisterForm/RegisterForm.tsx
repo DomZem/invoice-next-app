@@ -34,16 +34,22 @@ export default function RegisterForm() {
   const router = useRouter();
 
   const { mutate, isPending } = useMutation({
-    mutationFn: register,
+    mutationFn: (data: RegisterType) =>
+      toast.promise(register(data), {
+        loading: "Creating account ...",
+        success: "Account has been created 🔥",
+        error: (error: Error | AxiosError) => {
+          let message = "Something went wrong. Account hasn't been created";
+
+          if (axios.isAxiosError(error)) {
+            return `${message}. Error: ${error.response?.data.message}`;
+          }
+
+          return message;
+        },
+      }),
     onSuccess: () => {
       router.push("/");
-    },
-    onError: (err: Error | AxiosError) => {
-      if (axios.isAxiosError(err)) {
-        toast.error(`Something went wrong. ${err.response?.data.message}`);
-      } else {
-        toast.error("Something went wrong. Try maybe later.");
-      }
     },
   });
 

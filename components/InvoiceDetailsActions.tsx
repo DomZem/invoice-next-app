@@ -1,9 +1,9 @@
 "use client";
 
 import { axiosInstance } from "@/lib/axios";
-import { generateRandomString } from "@/lib/utils";
 import { FetchInvoice } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import UpdateInvoice from "./InvoiceForm/UpdateInvoice";
@@ -39,19 +39,22 @@ export default function InvoiceDetailsActions({
   const router = useRouter();
 
   const { mutate } = useMutation({
-    mutationFn: deleteInvoice,
+    mutationFn: (id: number) =>
+      toast.promise(deleteInvoice(id), {
+        loading: `Deleting #${data.mark} invoice ...`,
+        success: `Invoice #${data.mark} has been deleted 🔥`,
+        error: (error: Error | AxiosError) => {
+          let message = "Something went wrong. Invoice hasn't been deleted";
+
+          if (axios.isAxiosError(error)) {
+            return `${message}. Error: ${error.response?.data.message}`;
+          }
+
+          return message;
+        },
+      }),
     onSuccess: () => {
-      const toastId = generateRandomString();
       queryClient.invalidateQueries({ queryKey: ["invoices"] });
-      toast.success(`Invoice ${data.mark} has been deleted 🔥`, {
-        id: toastId,
-      });
-    },
-    onError: () => {
-      const toastId = generateRandomString();
-      toast.error("Something went wrong. Invoice hasn't been deleted", {
-        id: toastId,
-      });
     },
   });
 

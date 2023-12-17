@@ -14,6 +14,7 @@ export default function Toaster() {
           color: theme === "dark" ? "#dfe3fa" : "#0c0e16",
           fontSize: "15px",
           fontWeight: 500,
+          maxWidth: "400px",
         },
       }}
     />

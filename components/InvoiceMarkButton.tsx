@@ -1,8 +1,8 @@
 "use client";
 
 import { axiosInstance } from "@/lib/axios";
-import { generateRandomString } from "@/lib/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios, { AxiosError } from "axios";
 import toast from "react-hot-toast";
 import { Status } from "./InvoiceForm/formSchema";
 import { Button } from "./ui/Button";
@@ -38,23 +38,23 @@ export default function InvoiceMarkButton({
     status === "DRAFT" ? "PENDING" : status === "PENDING" ? "PAID" : "DRAFT";
 
   const { mutate, isPending } = useMutation({
-    mutationFn: updateInvoiceStatus,
-    onSuccess: () => {
-      const toastId = generateRandomString();
-      queryClient.invalidateQueries({ queryKey: ["invoices"] });
-      toast.success(
-        `Invoice status has been updated to ${nextStatus.toLowerCase()} 🔥`,
-        { id: toastId },
-      );
-    },
-    onError: (error) => {
-      const toastId = generateRandomString();
-      toast.error(
-        `Something went wrong. Invoice status hasn't been updated ${error.name}`,
-        {
-          id: toastId,
+    mutationFn: (data: { id: number; status: Status }) =>
+      toast.promise(updateInvoiceStatus(data), {
+        loading: "Updating invoice status ...",
+        success: `Invoice status has been updated to ${nextStatus.toLowerCase()} 🔥`,
+        error: (error: Error | AxiosError) => {
+          let message =
+            "Something went wrong. Invoice status hasn't been updated";
+
+          if (axios.isAxiosError(error)) {
+            return `${message}. Error: ${error.response?.data.message}`;
+          }
+
+          return message;
         },
-      );
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["invoices"] });
     },
   });
 
