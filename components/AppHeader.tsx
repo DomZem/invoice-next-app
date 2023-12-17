@@ -1,5 +1,6 @@
 import Logo from "@/public/logo.svg";
 import Image from "next/image";
+import LogoutButton from "./LogoutButton";
 import ModeToggle from "./ui/ModeToggle";
 
 export default function AppHeader() {
@@ -13,9 +14,14 @@ export default function AppHeader() {
         />
       </section>
       <section className="flex h-full lg:h-auto lg:w-full lg:flex-col">
-        <div className="flex items-center justify-center p-6 md:p-8">
-          <ModeToggle />
-        </div>
+        <ul className="flex lg:flex-col">
+          <li className="flex items-center justify-center p-4 md:p-6">
+            <ModeToggle />
+          </li>
+          <li className="flex items-center justify-center p-4 md:p-6">
+            <LogoutButton />
+          </li>
+        </ul>
         <div className="flex h-full items-center justify-center border-l border-[#494E6E] p-6 md:p-8 lg:border-l-0 lg:border-t lg:p-6">
           <Image
             height={40}

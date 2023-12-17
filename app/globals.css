@@ -98,4 +98,8 @@
   .logo::after {
     @apply absolute bottom-0 right-0 h-1/2 w-full rounded-br-[20px] rounded-tl-[20px] bg-primaryHover content-[""];
   }
+
+  .action-button {
+    @apply text-[19px] text-bluebellGray duration-200 hover:text-softLavender;
+  }
 }

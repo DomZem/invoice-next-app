@@ -8,8 +8,6 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/Sheet";
 import { axiosInstance } from "@/lib/axios";
 import { FetchInvoice } from "@/types";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { useRouter } from "next/navigation";
 import { LuLoader2 } from "react-icons/lu";
 import { MdAddCircle } from "react-icons/md";
 
@@ -27,8 +25,6 @@ export default function InvoicePage() {
     queryKey: ["invoices"],
   });
 
-  const router = useRouter();
-
   if (isLoading) {
     return (
       <main className="flex items-center justify-center">
@@ -38,13 +34,7 @@ export default function InvoicePage() {
   }
 
   if (error) {
-    // Redirect unauthorized user
-    if (axios.isAxiosError(error) && error.response?.status === 401) {
-      router.replace("/");
-      return null;
-    } else {
-      return <h1>Something went wrong try maybe later!</h1>;
-    }
+    return <h1>Something went wrong try maybe later!</h1>;
   }
 
   return (

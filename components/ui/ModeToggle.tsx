@@ -8,14 +8,15 @@ export default function ModeToggle() {
 
   return (
     <button
+      className="p-2"
       onClick={() => {
         theme === "dark" ? setTheme("light") : setTheme("dark");
       }}
     >
       {theme === "dark" ? (
-        <BsSunFill className="text-[19px] text-bluebellGray" />
+        <BsSunFill className="action-button" />
       ) : (
-        <BsFillMoonFill className="text-[19px] text-bluebellGray" />
+        <BsFillMoonFill className="action-button" />
       )}
     </button>
   );
