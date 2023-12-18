@@ -20,6 +20,15 @@ import {
 import { Input } from "../ui/Input";
 import { RegisterType, registerFormSchema } from "./formSchema";
 
+const defaultValues: RegisterType = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+  avatar: "",
+};
+
 const register = async (data: RegisterType) => {
   return axiosInstance.post("/auth/register", data, {
     withCredentials: true,
@@ -29,6 +38,7 @@ const register = async (data: RegisterType) => {
 export default function RegisterForm() {
   const form = useForm<RegisterType>({
     resolver: zodResolver(registerFormSchema),
+    defaultValues,
   });
 
   const router = useRouter();
@@ -76,7 +86,7 @@ export default function RegisterForm() {
                     <Input {...field} />
                   </FormControl>
 
-                  <FormMessage />
+                  <FormMessage data-testid="first-name-error-message" />
                 </FormItem>
               )}
             />
@@ -91,7 +101,7 @@ export default function RegisterForm() {
                     <Input {...field} />
                   </FormControl>
 
-                  <FormMessage />
+                  <FormMessage data-testid="last-name-error-message" />
                 </FormItem>
               )}
             />
@@ -108,7 +118,7 @@ export default function RegisterForm() {
                   <Input {...field} />
                 </FormControl>
 
-                <FormMessage />
+                <FormMessage data-testid="address-email-error-message" />
               </FormItem>
             )}
           />
@@ -124,7 +134,7 @@ export default function RegisterForm() {
                   <Input {...field} type="password" />
                 </FormControl>
 
-                <FormMessage />
+                <FormMessage data-testid="password-error-message" />
               </FormItem>
             )}
           />
@@ -140,7 +150,7 @@ export default function RegisterForm() {
                   <Input {...field} type="password" />
                 </FormControl>
 
-                <FormMessage />
+                <FormMessage data-testid="confirm-password-error-message" />
               </FormItem>
             )}
           />
@@ -156,7 +166,7 @@ export default function RegisterForm() {
                   <Input {...field} type="url" />
                 </FormControl>
 
-                <FormMessage />
+                <FormMessage data-testid="avatar-link-error-message" />
               </FormItem>
             )}
           />
