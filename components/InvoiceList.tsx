@@ -7,7 +7,7 @@ interface InvoiceListProps {
 
 export default function InvoiceList({ invoicesList }: InvoiceListProps) {
   return (
-    <ul className="flex flex-col gap-4 overflow-y-auto">
+    <ul className="flex flex-1 flex-col gap-4 overflow-y-auto">
       {invoicesList.map((invoice) => (
         <InvoiceListItem invoice={invoice} key={invoice.mark} />
       ))}
