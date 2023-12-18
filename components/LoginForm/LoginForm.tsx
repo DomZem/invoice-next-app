@@ -21,11 +21,16 @@ import {
 import { Input } from "../ui/Input";
 
 const loginFormSchema = z.object({
-  email: z.string(),
-  password: z.string(),
+  email: z.string().min(1, { message: "Required" }),
+  password: z.string().min(1, { message: "Required" }),
 });
 
 export type LoginType = z.infer<typeof loginFormSchema>;
+
+const defaultValues: LoginType = {
+  email: "",
+  password: "",
+};
 
 const login = async (data: LoginType) => {
   return axiosInstance.post("/auth/login", data, {
@@ -36,6 +41,7 @@ const login = async (data: LoginType) => {
 export default function LoginForm() {
   const form = useForm<LoginType>({
     resolver: zodResolver(loginFormSchema),
+    defaultValues,
   });
 
   const router = useRouter();
