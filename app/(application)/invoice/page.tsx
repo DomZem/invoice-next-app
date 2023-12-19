@@ -9,6 +9,7 @@ import InvoiceStatusFilter from "@/components/InvoiceStatusFilter";
 import { Button } from "@/components/ui/Button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/Sheet";
 import { axiosInstance } from "@/lib/axios";
+import { formatList } from "@/lib/utils";
 import { FetchInvoice } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
@@ -122,7 +123,15 @@ export default function InvoicePage() {
       <section className="flex flex-1 flex-col gap-5 overflow-hidden">
         {!filteredInvoices.length ? (
           <EmptyInvoices>
-            <p>Create an invoice by clicking the</p>
+            {selectedStatuses.length ? (
+              <p>
+                Create an invoice with status {formatList(selectedStatuses)} to
+                display it by clicking the
+              </p>
+            ) : (
+              <p>Create an invoice by clicking the</p>
+            )}
+
             <p>
               <span className="font-bold">New</span> button and get started
             </p>

@@ -17,16 +17,18 @@ export const getTotalInvoicePrice = (items: Item[]) => {
   return items.reduce((acc, { price, quantity }) => acc + price * quantity, 0);
 };
 
-export const generateRandomString = (): string => {
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  const randomString = Array.from(
-    { length: 2 },
-    () => characters[Math.floor(Math.random() * characters.length)],
-  ).join("");
-  const randomNumber = Math.floor(Math.random() * 10000)
-    .toString()
-    .padStart(4, "0");
-  return randomString + randomNumber;
+export const formatList = (items: string[]): string => {
+  if (items.length === 0) {
+    return "";
+  } else if (items.length === 1) {
+    return capitalizeFirstLetter(items[0]);
+  } else {
+    const formattedItems = items
+      .slice(0, -1)
+      .map((item) => capitalizeFirstLetter(item));
+    const lastItem = capitalizeFirstLetter(items[items.length - 1]);
+    return `${formattedItems.join(", ")} or ${lastItem}`;
+  }
 };
 
 export const getPaymentTermDays = (paymentTerm: PaymentTerm): number => {
