@@ -47,7 +47,10 @@ export default function InvoiceMarkButton({
             "Something went wrong. Invoice status hasn't been updated";
 
           if (axios.isAxiosError(error)) {
-            return `${message}. Error: ${error.response?.data.message}`;
+            const errorMessage = error.response?.data.message;
+            if (errorMessage) {
+              return `${message}. Error: ${errorMessage}`;
+            }
           }
 
           return message;
