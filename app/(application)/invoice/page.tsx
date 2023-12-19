@@ -2,8 +2,10 @@
 
 import EmptyInvoices from "@/components/EmptyInvoices";
 import CreateInvoice from "@/components/InvoiceForm/CreateInvoice";
+import { Status } from "@/components/InvoiceForm/formSchema";
 import InvoiceList from "@/components/InvoiceList";
 import InvoicePagination from "@/components/InvoicePagination";
+import InvoiceStatusFilter from "@/components/InvoiceStatusFilter";
 import { Button } from "@/components/ui/Button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/Sheet";
 import { axiosInstance } from "@/lib/axios";
@@ -40,7 +42,11 @@ const fetchInvoices = async (page: number) => {
 
 export default function InvoicePage() {
   const [page, setPage] = useState(1);
-
+  const [selectedStatuses, setSelectedStatuses] = useState<Status[]>([
+    "DRAFT",
+    "PENDING",
+    "PAID",
+  ]);
   const { isLoading, isError, data } = useQuery({
     queryKey: ["invoices", page],
     queryFn: () => fetchInvoices(page),
@@ -58,8 +64,21 @@ export default function InvoicePage() {
     return <h1>Something went wrong try maybe later!</h1>;
   }
 
+  const handleCheckboxClick = (status: Status) => {
+    setSelectedStatuses((prevSelectedStatuses) => {
+      if (prevSelectedStatuses.includes(status)) {
+        return prevSelectedStatuses.filter((s) => s !== status);
+      } else {
+        return [...prevSelectedStatuses, status];
+      }
+    });
+  };
+
   const invoices = data.data;
-  const { total, lastPage } = data.meta;
+  const filteredInvoices = invoices.filter((invoice) =>
+    selectedStatuses.some((value) => invoice.status === value),
+  );
+  const { lastPage } = data.meta;
 
   return (
     <main className="mx-auto flex w-full max-w-[730px] flex-col gap-8 overflow-hidden px-6 py-9 md:gap-[55px] md:px-12 md:py-[62px] lg:gap-16 lg:py-[78px]">
@@ -69,15 +88,20 @@ export default function InvoicePage() {
             Invoices
           </h1>
           <p>
-            {total === 0
+            {filteredInvoices.length === 0
               ? "No invoices"
-              : total === 1
+              : filteredInvoices.length === 1
                 ? "1 invoice"
-                : `There are ${total} invoices`}
+                : `There are ${filteredInvoices.length} invoices`}
           </p>
         </div>
 
-        <div className="flex items-center gap-[18px]">
+        <div className="flex items-center gap-[18px] md:gap-10">
+          <InvoiceStatusFilter
+            selectedStatuses={selectedStatuses}
+            handleCheckboxClick={handleCheckboxClick}
+          />
+
           <Sheet>
             <Button className=" py-[6px] pl-[6px] pr-[15px]" asChild>
               <SheetTrigger className="flex items-center gap-2">
@@ -96,7 +120,7 @@ export default function InvoicePage() {
       </section>
 
       <section className="flex flex-1 flex-col gap-5 overflow-hidden">
-        {!invoices.length ? (
+        {!filteredInvoices.length ? (
           <EmptyInvoices>
             <p>Create an invoice by clicking the</p>
             <p>
@@ -104,7 +128,7 @@ export default function InvoicePage() {
             </p>
           </EmptyInvoices>
         ) : (
-          <InvoiceList invoicesList={invoices} />
+          <InvoiceList invoicesList={filteredInvoices} />
         )}
 
         <InvoicePagination

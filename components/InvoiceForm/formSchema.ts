@@ -18,7 +18,7 @@ const itemFormSchema = z.object({
 });
 
 const PAYMENT_TERMS = ["NET_1", "NET_7", "NET_14", "NET_30"] as const;
-const STATUS = ["DRAFT", "PENDING", "PAID"] as const;
+export const STATUS = ["DRAFT", "PENDING", "PAID"] as const;
 
 const zPaymentType = z.enum(PAYMENT_TERMS);
 const zStatusType = z.enum(STATUS);
