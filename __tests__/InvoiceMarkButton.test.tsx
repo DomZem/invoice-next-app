@@ -1,106 +1,104 @@
 import InvoiceMarkButton from "@/components/InvoiceMarkButton";
 import Toaster from "@/components/ui/Toaster";
 import { server } from "@/mocks/server";
-import QueryProvider from "@/providers/QueryProvider";
+import { TestQueryProvider } from "@/providers/TestQueryProvider";
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { rest } from "msw";
+import toast from "react-hot-toast";
 
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
 }));
 
-Object.defineProperty(global, "matchMedia", {
-  writable: true,
-  value: jest.fn().mockImplementation((query) => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: jest.fn(), // deprecated
-    removeListener: jest.fn(), // deprecated
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
-  })),
-});
-
 describe("LoginForm", () => {
-  beforeEach(() => {});
-
   describe("Render", () => {
     it("it should render button with text 'Mark as Pending' when status is 'DRAFT' ", () => {
       render(
-        <QueryProvider>
+        <TestQueryProvider>
           <InvoiceMarkButton status="DRAFT" id={1} />
-        </QueryProvider>,
+        </TestQueryProvider>,
       );
 
-      const button = screen.getByRole("button");
-
-      expect(button).toHaveTextContent("Mark as Pending");
+      expect(
+        screen.getByRole("button", {
+          name: /Mark as Pending/i,
+        }),
+      ).toBeInTheDocument();
     });
 
     it("it should render button with text 'Mark as Paid' when status is 'PENDING' ", () => {
       render(
-        <QueryProvider>
+        <TestQueryProvider>
           <InvoiceMarkButton status="PENDING" id={1} />
-        </QueryProvider>,
+        </TestQueryProvider>,
       );
 
-      const button = screen.getByRole("button");
-
-      expect(button).toHaveTextContent("Mark as Paid");
+      expect(
+        screen.getByRole("button", {
+          name: /Mark as Paid/i,
+        }),
+      ).toBeInTheDocument();
     });
 
     it("it should render button with text 'Mark as Draft' when status is 'PAID' ", () => {
       render(
-        <QueryProvider>
+        <TestQueryProvider>
           <InvoiceMarkButton status="PAID" id={1} />
-        </QueryProvider>,
+        </TestQueryProvider>,
       );
 
-      const button = screen.getByRole("button");
-
-      expect(button).toHaveTextContent("Mark as Draft");
+      expect(
+        screen.getByRole("button", {
+          name: /Mark as Draft/i,
+        }),
+      ).toBeInTheDocument();
     });
   });
 
   describe("Behavior", () => {
+    beforeEach(() => {
+      toast.remove();
+    });
+
     it("should display 'Updating invoice status ...' message in toast when request is loading", async () => {
-      // ARRANGE
       server.use(
-        rest.patch("http://localhost:8080/invoice/1", (req, res, ctx) => {
-          return res(ctx.delay(500), ctx.status(200));
+        rest.patch("http://localhost:8080/invoice/:id", (req, res, ctx) => {
+          return res(ctx.delay(300), ctx.status(200));
         }),
       );
+
       render(
-        <QueryProvider>
-          <InvoiceMarkButton status="DRAFT" id={1} />
+        <TestQueryProvider>
           <Toaster />
-        </QueryProvider>,
+          <InvoiceMarkButton status="PAID" id={1} />
+        </TestQueryProvider>,
       );
 
-      // ACT
-      const button = screen.getByRole("button");
+      const button = screen.getByRole("button", {
+        name: /Mark as Draft/i,
+      });
       await userEvent.click(button);
-      const toast = screen.getAllByRole("status")[0];
 
-      // ASSERT
+      const toast = await screen.findByRole("status");
       expect(toast).toHaveTextContent("Updating invoice status ...");
     });
 
     it("should display 'Invoice status has been updated to pending 🔥' message in toast when status is 'DRAFT'", async () => {
       render(
-        <QueryProvider>
-          <InvoiceMarkButton status="DRAFT" id={1} />
+        <TestQueryProvider>
           <Toaster />
-        </QueryProvider>,
+          <InvoiceMarkButton status="DRAFT" id={1} />
+        </TestQueryProvider>,
       );
 
-      const button = screen.getByRole("button");
+      const button = screen.getByRole("button", {
+        name: /Mark as Pending/i,
+      });
       await userEvent.click(button);
-      const toast = screen.getAllByRole("status")[0];
+
+      const toast = await screen.findByRole("status");
 
       expect(toast).toHaveTextContent(
         "Invoice status has been updated to pending 🔥",
@@ -109,15 +107,18 @@ describe("LoginForm", () => {
 
     it("should display 'Invoice status has been updated to paid 🔥' message in toast when status is 'PENDING'", async () => {
       render(
-        <QueryProvider>
-          <InvoiceMarkButton status="PENDING" id={1} />
+        <TestQueryProvider>
           <Toaster />
-        </QueryProvider>,
+          <InvoiceMarkButton status="PENDING" id={1} />
+        </TestQueryProvider>,
       );
 
-      const button = screen.getByRole("button");
+      const button = screen.getByRole("button", {
+        name: /Mark as Paid/i,
+      });
       await userEvent.click(button);
-      const toast = screen.getAllByRole("status")[0];
+
+      const toast = await screen.findByRole("status");
 
       expect(toast).toHaveTextContent(
         "Invoice status has been updated to paid 🔥",
@@ -126,15 +127,18 @@ describe("LoginForm", () => {
 
     it("should display 'Invoice status has been updated to draft 🔥' message in toast when status is 'PAID'", async () => {
       render(
-        <QueryProvider>
-          <InvoiceMarkButton status="PAID" id={1} />
+        <TestQueryProvider>
           <Toaster />
-        </QueryProvider>,
+          <InvoiceMarkButton status="PAID" id={1} />
+        </TestQueryProvider>,
       );
 
-      const button = screen.getByRole("button");
+      const button = screen.getByRole("button", {
+        name: /Mark as Draft/i,
+      });
       await userEvent.click(button);
-      const toast = screen.getAllByRole("status")[0];
+
+      const toast = await screen.findByRole("status");
 
       expect(toast).toHaveTextContent(
         "Invoice status has been updated to draft 🔥",
@@ -143,21 +147,24 @@ describe("LoginForm", () => {
 
     it("should display 'Something went wrong. Invoice status hasn't been updated' error message in toast when error is not instance of axios", async () => {
       server.use(
-        rest.patch("http://localhost:8080/invoice/1", (req, res, ctx) => {
-          return res(ctx.status(404));
+        rest.patch("http://localhost:8080/invoice/:id", (req, res, ctx) => {
+          return res(ctx.status(403));
         }),
       );
 
       render(
-        <QueryProvider>
-          <InvoiceMarkButton status="PAID" id={1} />
+        <TestQueryProvider>
           <Toaster />
-        </QueryProvider>,
+          <InvoiceMarkButton status="PAID" id={1} />
+        </TestQueryProvider>,
       );
 
-      const button = screen.getByRole("button");
+      const button = screen.getByRole("button", {
+        name: /Mark as Draft/i,
+      });
       await userEvent.click(button);
-      const toast = screen.getAllByRole("status")[0];
+
+      const toast = await screen.findByRole("status");
 
       expect(toast).toHaveTextContent(
         "Something went wrong. Invoice status hasn't been updated",
