@@ -8,4 +8,8 @@ export const handlers = [
   rest.delete("http://localhost:8080/invoice/:id", (req, res, ctx) => {
     return res(ctx.status(200));
   }),
+
+  rest.get("http://localhost:8080/auth/logout", (req, res, ctx) => {
+    return res(ctx.status(200));
+  }),
 ];

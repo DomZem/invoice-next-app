@@ -27,7 +27,11 @@ export default function LogoutButton() {
           let message = "Something went wrong. You have not been logged out";
 
           if (axios.isAxiosError(error)) {
-            return `${message}. Error: ${error.response?.data.message}`;
+            const errorMessage = error.response?.data.message;
+
+            if (errorMessage) {
+              return `${message}. Error: ${errorMessage}`;
+            }
           }
 
           return message;
