@@ -11,7 +11,7 @@ const addressFormSchema = z.object({
   country: z.string().min(1, msg).max(50),
 });
 
-const itemFormSchema = z.object({
+export const itemFormSchema = z.object({
   name: z.string().min(1, msg).max(50),
   quantity: z.number().positive(),
   price: z.number().multipleOf(0.01),
