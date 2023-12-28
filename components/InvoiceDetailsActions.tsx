@@ -47,7 +47,10 @@ export default function InvoiceDetailsActions({
           let message = "Something went wrong. Invoice hasn't been deleted";
 
           if (axios.isAxiosError(error)) {
-            return `${message}. Error: ${error.response?.data.message}`;
+            const errorMessage = error.response?.data.message;
+            if (errorMessage) {
+              return `${message}. Error: ${errorMessage}`;
+            }
           }
 
           return message;
