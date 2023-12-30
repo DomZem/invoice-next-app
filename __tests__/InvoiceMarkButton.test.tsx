@@ -12,9 +12,9 @@ jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
 }));
 
-describe("LoginForm", () => {
+describe("InvoiceMarkButton component", () => {
   describe("Render", () => {
-    it("it should render button with text 'Mark as Pending' when status is 'DRAFT' ", () => {
+    it("should render button with text 'Mark as Pending' when status is 'DRAFT' ", () => {
       render(
         <TestQueryProvider>
           <InvoiceMarkButton status="DRAFT" id={1} />
@@ -28,7 +28,7 @@ describe("LoginForm", () => {
       ).toBeInTheDocument();
     });
 
-    it("it should render button with text 'Mark as Paid' when status is 'PENDING' ", () => {
+    it("should render button with text 'Mark as Paid' when status is 'PENDING' ", () => {
       render(
         <TestQueryProvider>
           <InvoiceMarkButton status="PENDING" id={1} />
@@ -42,7 +42,7 @@ describe("LoginForm", () => {
       ).toBeInTheDocument();
     });
 
-    it("it should render button with text 'Mark as Draft' when status is 'PAID' ", () => {
+    it("should render button with text 'Mark as Draft' when status is 'PAID' ", () => {
       render(
         <TestQueryProvider>
           <InvoiceMarkButton status="PAID" id={1} />
@@ -62,7 +62,7 @@ describe("LoginForm", () => {
       toast.remove();
     });
 
-    it("should display 'Updating invoice status ...' message in toast when request is loading", async () => {
+    it("should display 'Updating invoice status ...' message in toast when request is processing", async () => {
       server.use(
         rest.patch("http://localhost:8080/invoice/:id", (req, res, ctx) => {
           return res(ctx.delay(300), ctx.status(200));
@@ -81,8 +81,9 @@ describe("LoginForm", () => {
       });
       await userEvent.click(button);
 
-      const toast = await screen.findByRole("status");
-      expect(toast).toHaveTextContent("Updating invoice status ...");
+      expect(
+        screen.getByText("Updating invoice status ..."),
+      ).toBeInTheDocument();
     });
 
     it("should display 'Invoice status has been updated to pending 🔥' message in toast when status is 'DRAFT'", async () => {
@@ -98,11 +99,9 @@ describe("LoginForm", () => {
       });
       await userEvent.click(button);
 
-      const toast = await screen.findByRole("status");
-
-      expect(toast).toHaveTextContent(
-        "Invoice status has been updated to pending 🔥",
-      );
+      expect(
+        screen.getByText("Invoice status has been updated to pending 🔥"),
+      ).toBeInTheDocument();
     });
 
     it("should display 'Invoice status has been updated to paid 🔥' message in toast when status is 'PENDING'", async () => {
@@ -118,11 +117,9 @@ describe("LoginForm", () => {
       });
       await userEvent.click(button);
 
-      const toast = await screen.findByRole("status");
-
-      expect(toast).toHaveTextContent(
-        "Invoice status has been updated to paid 🔥",
-      );
+      expect(
+        screen.getByText("Invoice status has been updated to paid 🔥"),
+      ).toBeInTheDocument();
     });
 
     it("should display 'Invoice status has been updated to draft 🔥' message in toast when status is 'PAID'", async () => {
@@ -138,11 +135,9 @@ describe("LoginForm", () => {
       });
       await userEvent.click(button);
 
-      const toast = await screen.findByRole("status");
-
-      expect(toast).toHaveTextContent(
-        "Invoice status has been updated to draft 🔥",
-      );
+      expect(
+        screen.getByText("Invoice status has been updated to draft 🔥"),
+      ).toBeInTheDocument();
     });
 
     it("should display 'Something went wrong. Invoice status hasn't been updated' error message in toast when error is not instance of axios", async () => {
@@ -164,11 +159,11 @@ describe("LoginForm", () => {
       });
       await userEvent.click(button);
 
-      const toast = await screen.findByRole("status");
-
-      expect(toast).toHaveTextContent(
-        "Something went wrong. Invoice status hasn't been updated",
-      );
+      expect(
+        screen.getByText(
+          "Something went wrong. Invoice status hasn't been updated",
+        ),
+      ).toBeInTheDocument();
     });
   });
 });
