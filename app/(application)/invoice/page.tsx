@@ -2,19 +2,16 @@
 
 import EmptyInvoices from "@/components/EmptyInvoices";
 import CreateInvoice from "@/components/InvoiceForm/CreateInvoice";
-import { Status } from "@/components/InvoiceForm/formSchema";
+import { Invoice, Status } from "@/components/InvoiceForm/formSchema";
 import InvoiceList from "@/components/InvoiceList";
 import InvoicePagination from "@/components/InvoicePagination";
 import InvoiceStatusFilter from "@/components/InvoiceStatusFilter";
-import { Button } from "@/components/ui/Button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/Sheet";
 import { axiosInstance } from "@/lib/axios";
 import { formatList } from "@/lib/utils";
 import { FetchInvoice } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { LuLoader2 } from "react-icons/lu";
-import { MdAddCircle } from "react-icons/md";
 
 const INVOICES_PER_PAGE = 6;
 
@@ -28,6 +25,34 @@ type FetchPaginationInvoice = {
     prev: number | null;
     next: number | null;
   };
+};
+
+const defaultValues: Invoice = {
+  clientName: "",
+  clientEmail: "",
+  date: new Date(),
+  status: "PENDING",
+  paymentTerm: "NET_7",
+  projectDescription: "",
+  billFromAddress: {
+    streetName: "",
+    city: "",
+    postCode: "",
+    country: "",
+  },
+  billToAddress: {
+    streetName: "",
+    city: "",
+    postCode: "",
+    country: "",
+  },
+  items: [
+    {
+      name: "",
+      price: 0,
+      quantity: 0,
+    },
+  ],
 };
 
 const fetchInvoices = async (page: number) => {
@@ -103,20 +128,7 @@ export default function InvoicePage() {
             handleCheckboxClick={handleCheckboxClick}
           />
 
-          <Sheet>
-            <Button className=" py-[6px] pl-[6px] pr-[15px]" asChild>
-              <SheetTrigger className="flex items-center gap-2">
-                <MdAddCircle className="text-[39px]" />
-                New
-              </SheetTrigger>
-            </Button>
-            <SheetContent
-              side="left"
-              className="top-[72px] h-[calc(100%-72px)] w-full max-w-[616px] md:top-20 md:h-[calc(100%-5rem)] md:max-w-[719px] md:rounded-r-[20px] lg:top-0 lg:h-full"
-            >
-              <CreateInvoice />
-            </SheetContent>
-          </Sheet>
+          <CreateInvoice defaultValues={defaultValues} />
         </div>
       </section>
 

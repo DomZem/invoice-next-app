@@ -32,6 +32,8 @@ interface InvoiceFormTemplateProps {
   variant: "create" | "update";
   defaultValues: Invoice;
   onSubmit: (data: Invoice) => void;
+  isPending: boolean;
+  isSuccess: boolean;
   mark?: string;
 }
 
@@ -39,6 +41,8 @@ export default function InvoiceFormTemplate({
   variant,
   defaultValues,
   onSubmit,
+  isPending,
+  isSuccess,
   mark,
 }: InvoiceFormTemplateProps) {
   const methods = useForm<Invoice>({
@@ -49,9 +53,9 @@ export default function InvoiceFormTemplate({
   const handleFormSubmit = (data: Invoice) => {
     onSubmit(data);
 
-    // if (variant === "add") {
-    //   methods.reset();
-    // }
+    if (isSuccess && variant === "create") {
+      methods.reset();
+    }
   };
 
   return (
@@ -88,7 +92,10 @@ export default function InvoiceFormTemplate({
                     </div>
 
                     <FormControl>
-                      <FormInput {...field} />
+                      <FormInput
+                        {...field}
+                        data-testid="billFromStreetAddress"
+                      />
                     </FormControl>
                   </FormItem>
                 )}
@@ -106,7 +113,7 @@ export default function InvoiceFormTemplate({
                       </div>
 
                       <FormControl>
-                        <FormInput {...field} />
+                        <FormInput {...field} data-testid="billFromCity" />
                       </FormControl>
                     </FormItem>
                   )}
@@ -123,7 +130,7 @@ export default function InvoiceFormTemplate({
                       </div>
 
                       <FormControl>
-                        <FormInput {...field} />
+                        <FormInput {...field} data-testid="billFromPostCode" />
                       </FormControl>
                     </FormItem>
                   )}
@@ -140,7 +147,7 @@ export default function InvoiceFormTemplate({
                       </div>
 
                       <FormControl>
-                        <FormInput {...field} />
+                        <FormInput {...field} data-testid="billFromCountry" />
                       </FormControl>
                     </FormItem>
                   )}
@@ -196,7 +203,7 @@ export default function InvoiceFormTemplate({
                     </div>
 
                     <FormControl>
-                      <FormInput {...field} />
+                      <FormInput {...field} data-testid="billToStreetAddress" />
                     </FormControl>
                   </FormItem>
                 )}
@@ -214,7 +221,7 @@ export default function InvoiceFormTemplate({
                       </div>
 
                       <FormControl>
-                        <FormInput {...field} />
+                        <FormInput {...field} data-testid="billToCity" />
                       </FormControl>
                     </FormItem>
                   )}
@@ -231,7 +238,7 @@ export default function InvoiceFormTemplate({
                       </div>
 
                       <FormControl>
-                        <FormInput {...field} />
+                        <FormInput {...field} data-testid="billToPostCode" />
                       </FormControl>
                     </FormItem>
                   )}
@@ -248,7 +255,7 @@ export default function InvoiceFormTemplate({
                       </div>
 
                       <FormControl>
-                        <FormInput {...field} />
+                        <FormInput {...field} data-testid="billToCountry" />
                       </FormControl>
                     </FormItem>
                   )}
@@ -370,9 +377,13 @@ export default function InvoiceFormTemplate({
               {/* If user submit that button the status will be 'DRAFT' */}
               {variant === "create" && (
                 <Button
-                  onClick={methods.handleSubmit((data) =>
-                    onSubmit({ ...data, status: "DRAFT" }),
-                  )}
+                  onClick={methods.handleSubmit((data) => {
+                    onSubmit({ ...data, status: "DRAFT" });
+                    if (isSuccess) {
+                      methods.reset();
+                    }
+                  })}
+                  disabled={isPending}
                   className="text-clip"
                   type="submit"
                   variant="outline"
@@ -382,7 +393,7 @@ export default function InvoiceFormTemplate({
               )}
 
               {/* If user submit that button the status will be 'PENDING' */}
-              <Button type="submit">
+              <Button type="submit" disabled={isPending}>
                 {variant === "create" && "Save & Send"}
                 {variant === "update" && "Save Changes"}
               </Button>

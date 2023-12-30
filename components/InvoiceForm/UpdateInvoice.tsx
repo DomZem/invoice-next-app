@@ -19,7 +19,7 @@ interface UpdateInvoiceProps {
 export default function UpdateInvoice({ data }: UpdateInvoiceProps) {
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation({
+  const { mutate, isPending, isSuccess } = useMutation({
     mutationFn: (data: FetchInvoice) =>
       toast.promise(updateInvoice(data), {
         loading: `Upadting #${data.mark} invoice ...`,
@@ -48,6 +48,8 @@ export default function UpdateInvoice({ data }: UpdateInvoiceProps) {
       variant="update"
       defaultValues={{ ...data, date: new Date(data.date) }}
       onSubmit={handleUpdateInvoice}
+      isPending={isPending}
+      isSuccess={isSuccess}
       mark={data.mark}
     />
   );
