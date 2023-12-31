@@ -20,22 +20,17 @@ import {
 import { Input } from "../ui/Input";
 import { RegisterType, registerFormSchema } from "./formSchema";
 
-const defaultValues: RegisterType = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
-  avatar: "",
-};
-
 const register = async (data: RegisterType) => {
   return axiosInstance.post("/auth/register", data, {
     withCredentials: true,
   });
 };
 
-export default function RegisterForm() {
+interface RegisterFormProps {
+  defaultValues: RegisterType;
+}
+
+export default function RegisterForm({ defaultValues }: RegisterFormProps) {
   const form = useForm<RegisterType>({
     resolver: zodResolver(registerFormSchema),
     defaultValues,
@@ -52,7 +47,11 @@ export default function RegisterForm() {
           let message = "Something went wrong. Account hasn't been created";
 
           if (axios.isAxiosError(error)) {
-            return `${message}. Error: ${error.response?.data.message}`;
+            const errorMessage = error.response?.data.message;
+
+            if (errorMessage) {
+              return `${message}. Error: ${errorMessage}`;
+            }
           }
 
           return message;
@@ -95,7 +94,7 @@ export default function RegisterForm() {
               name="lastName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Last name</FormLabel>
+                  <FormLabel>Last Name</FormLabel>
 
                   <FormControl>
                     <Input {...field} />
@@ -112,7 +111,7 @@ export default function RegisterForm() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Address email</FormLabel>
+                <FormLabel>Address Email</FormLabel>
 
                 <FormControl>
                   <Input {...field} />
@@ -144,7 +143,7 @@ export default function RegisterForm() {
             name="confirmPassword"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Confirm password</FormLabel>
+                <FormLabel>Confirm Password</FormLabel>
 
                 <FormControl>
                   <Input {...field} type="password" />
@@ -160,7 +159,7 @@ export default function RegisterForm() {
             name="avatar"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Avatar link</FormLabel>
+                <FormLabel>Avatar Link</FormLabel>
 
                 <FormControl>
                   <Input {...field} type="url" />

@@ -16,4 +16,8 @@ export const handlers = [
   rest.get("http://localhost:8080/auth/logout", (req, res, ctx) => {
     return res(ctx.status(200));
   }),
+
+  rest.post("http://localhost:8080/auth/register", (req, res, ctx) => {
+    return res(ctx.status(200));
+  }),
 ];
