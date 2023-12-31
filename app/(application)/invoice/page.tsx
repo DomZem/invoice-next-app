@@ -1,13 +1,11 @@
 "use client";
 
-import EmptyInvoices from "@/components/EmptyInvoices";
 import CreateInvoice from "@/components/InvoiceForm/CreateInvoice";
 import { Invoice, Status } from "@/components/InvoiceForm/formSchema";
 import InvoiceList from "@/components/InvoiceList";
 import InvoicePagination from "@/components/InvoicePagination";
 import InvoiceStatusFilter from "@/components/InvoiceStatusFilter";
 import { axiosInstance } from "@/lib/axios";
-import { formatList } from "@/lib/utils";
 import { FetchInvoice } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
@@ -133,24 +131,7 @@ export default function InvoicePage() {
       </section>
 
       <section className="flex flex-1 flex-col gap-5 overflow-hidden">
-        {!filteredInvoices.length ? (
-          <EmptyInvoices>
-            {selectedStatuses.length ? (
-              <p>
-                Create an invoice with status {formatList(selectedStatuses)} to
-                display it by clicking the
-              </p>
-            ) : (
-              <p>Create an invoice by clicking the</p>
-            )}
-
-            <p>
-              <span className="font-bold">New</span> button and get started
-            </p>
-          </EmptyInvoices>
-        ) : (
-          <InvoiceList invoicesList={filteredInvoices} />
-        )}
+        <InvoiceList invoices={filteredInvoices} statuses={selectedStatuses} />
 
         <InvoicePagination
           page={page}
