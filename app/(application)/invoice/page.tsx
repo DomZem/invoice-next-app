@@ -2,6 +2,7 @@
 
 import CreateInvoice from "@/components/InvoiceForm/CreateInvoice";
 import { Invoice, Status } from "@/components/InvoiceForm/formSchema";
+import InvoiceHeader from "@/components/InvoiceHeader";
 import InvoiceList from "@/components/InvoiceList";
 import InvoicePagination from "@/components/InvoicePagination";
 import InvoiceStatusFilter from "@/components/InvoiceStatusFilter";
@@ -107,18 +108,7 @@ export default function InvoicePage() {
   return (
     <main className="mx-auto flex w-full max-w-[730px] flex-col gap-8 overflow-hidden px-6 py-9 md:gap-[55px] md:px-12 md:py-[62px] lg:gap-16 lg:py-[78px]">
       <section className="flex items-center justify-between">
-        <div>
-          <h1 className="heading-m-text md:heading-l-text text-starlessNight dark:text-white">
-            Invoices
-          </h1>
-          <p>
-            {filteredInvoices.length === 0
-              ? "No invoices"
-              : filteredInvoices.length === 1
-                ? "1 invoice"
-                : `There are ${filteredInvoices.length} invoices`}
-          </p>
-        </div>
+        <InvoiceHeader invoices={filteredInvoices} />
 
         <div className="flex items-center gap-[18px] md:gap-10">
           <InvoiceStatusFilter
