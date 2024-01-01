@@ -6,11 +6,11 @@ import InvoiceHeader from "@/components/InvoiceHeader";
 import InvoiceList from "@/components/InvoiceList";
 import InvoicePagination from "@/components/InvoicePagination";
 import InvoiceStatusFilter from "@/components/InvoiceStatusFilter";
+import Loading from "@/components/ui/Loading";
 import { axiosInstance } from "@/lib/axios";
 import { FetchInvoice } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { LuLoader2 } from "react-icons/lu";
 
 const INVOICES_PER_PAGE = 6;
 
@@ -80,7 +80,7 @@ export default function InvoicePage() {
   if (isLoading) {
     return (
       <main className="flex items-center justify-center">
-        <LuLoader2 className="animate-spin text-4xl font-bold text-primary" />
+        <Loading />
       </main>
     );
   }

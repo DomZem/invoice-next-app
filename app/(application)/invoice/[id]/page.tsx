@@ -3,13 +3,13 @@
 import GoBackButton from "@/components/GoBackButton";
 import InvoiceDetailsActions from "@/components/InvoiceDetailsActions";
 import InvoiceStatus from "@/components/InvoiceStatus";
+import Loading from "@/components/ui/Loading";
 import { axiosInstance } from "@/lib/axios";
 import { getPaymentTermDays, getTotalInvoicePrice } from "@/lib/utils";
 import { FetchInvoice } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import add from "date-fns/add";
-import { LuLoader2 } from "react-icons/lu";
 
 const fetchInvoiceById = async (id: string): Promise<FetchInvoice> => {
   const response = await axiosInstance.get<FetchInvoice>(`/invoice/${id}`, {
@@ -30,7 +30,7 @@ export default function InvoiceDetails({ params }: { params: { id: string } }) {
   if (isLoading) {
     return (
       <main className="flex items-center justify-center">
-        <LuLoader2 className="animate-spin text-4xl font-bold text-primary" />
+        <Loading />
       </main>
     );
   }
