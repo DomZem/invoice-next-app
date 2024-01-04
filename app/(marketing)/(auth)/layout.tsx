@@ -1,3 +1,6 @@
+import Loading from "@/components/ui/Loading";
+import { Suspense } from "react";
+
 export default function AuthLayout({
   children,
 }: {
@@ -5,7 +8,7 @@ export default function AuthLayout({
 }) {
   return (
     <main className="flex h-screen items-center justify-center p-4">
-      {children}
+      <Suspense fallback={<Loading />}>{children}</Suspense>
     </main>
   );
 }
