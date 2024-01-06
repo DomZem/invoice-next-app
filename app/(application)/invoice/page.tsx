@@ -124,6 +124,7 @@ export default function InvoicePage() {
         <InvoiceList invoices={filteredInvoices} statuses={selectedStatuses} />
 
         <InvoicePagination
+          invoicesLength={filteredInvoices.length}
           page={page}
           lastPage={lastPage}
           onPreviousButtonClick={() => setPage((old) => Math.max(old - 1, 0))}

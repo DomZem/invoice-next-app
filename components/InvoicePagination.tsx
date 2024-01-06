@@ -5,6 +5,7 @@ interface InvoicePaginationProps {
   lastPage: number;
   onPreviousButtonClick: () => void;
   onNextButtonClick: () => void;
+  invoicesLength: number;
 }
 
 export default function InvoicePagination({
@@ -12,6 +13,7 @@ export default function InvoicePagination({
   lastPage,
   onPreviousButtonClick,
   onNextButtonClick,
+  invoicesLength,
 }: InvoicePaginationProps) {
   return (
     <div className="flex items-center justify-between">
@@ -23,7 +25,7 @@ export default function InvoicePagination({
         <Button
           variant="outline"
           onClick={onPreviousButtonClick}
-          disabled={page === 1}
+          disabled={page === 1 || invoicesLength === 0}
         >
           Previous
         </Button>
@@ -31,7 +33,7 @@ export default function InvoicePagination({
         <Button
           variant="outline"
           onClick={onNextButtonClick}
-          disabled={page === lastPage}
+          disabled={page === lastPage || invoicesLength === 0}
         >
           Next
         </Button>
