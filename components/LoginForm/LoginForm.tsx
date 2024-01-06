@@ -48,7 +48,8 @@ export default function LoginForm() {
 
   const { mutate, isPending } = useMutation({
     mutationFn: login,
-    onSuccess: () => {
+    onSuccess: ({ data: { avatar } }) => {
+      sessionStorage.setItem("user_image", avatar);
       router.push("/invoice");
     },
     onError: (err: Error | AxiosError) => {

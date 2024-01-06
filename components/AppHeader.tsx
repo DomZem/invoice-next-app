@@ -1,6 +1,7 @@
 import Logo from "@/public/logo.svg";
 import Image from "next/image";
 import LogoutButton from "./LogoutButton";
+import UserImage from "./UserImage";
 import ModeToggle from "./ui/ModeToggle";
 
 export default function AppHeader() {
@@ -23,13 +24,7 @@ export default function AppHeader() {
           </li>
         </ul>
         <div className="flex h-full items-center justify-center border-l border-[#494E6E] p-6 md:p-8 lg:border-l-0 lg:border-t lg:p-6">
-          <Image
-            height={40}
-            width={40}
-            src="https://images.pexels.com/photos/10311994/pexels-photo-10311994.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            className="h-8 w-8 rounded-full bg-slate-700 lg:h-10 lg:w-10"
-            alt="user image"
-          />
+          <UserImage />
         </div>
       </section>
     </header>
