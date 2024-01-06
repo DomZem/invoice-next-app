@@ -285,7 +285,7 @@ export default function InvoiceFormTemplate({
                           </button>
                         </FormControl>
                       </PopoverTrigger>
-                      <PopoverContent>
+                      <PopoverContent className="popover-content max-w-xs">
                         <Calendar
                           mode="single"
                           selected={field.value}
