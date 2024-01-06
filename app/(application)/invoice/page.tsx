@@ -1,5 +1,6 @@
 "use client";
 
+import ErrorInvoice from "@/components/ErrorInvoice";
 import CreateInvoice from "@/components/InvoiceForm/CreateInvoice";
 import { Invoice, Status } from "@/components/InvoiceForm/formSchema";
 import InvoiceHeader from "@/components/InvoiceHeader";
@@ -10,6 +11,7 @@ import Loading from "@/components/ui/Loading";
 import { axiosInstance } from "@/lib/axios";
 import { FetchInvoice } from "@/types";
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { useState } from "react";
 
 const INVOICES_PER_PAGE = 6;
@@ -72,7 +74,7 @@ export default function InvoicePage() {
     "PENDING",
     "PAID",
   ]);
-  const { isLoading, isError, data } = useQuery({
+  const { isLoading, error, data } = useQuery({
     queryKey: ["invoices", page],
     queryFn: () => fetchInvoices(page),
   });
@@ -85,8 +87,23 @@ export default function InvoicePage() {
     );
   }
 
-  if (isError || !data) {
-    return <h1>Something went wrong try maybe later!</h1>;
+  if (error || !data) {
+    let message = "Try maybe later!";
+
+    if (axios.isAxiosError(error)) {
+      const errorMessage = error.response?.data.message;
+      message = `Error: ${errorMessage}. ` + message;
+    }
+
+    return (
+      <main className="flex items-center justify-center">
+        <div className="max-w-[730px] px-6 md:px-10">
+          <ErrorInvoice>
+            <p>{message}</p>
+          </ErrorInvoice>
+        </div>
+      </main>
+    );
   }
 
   const handleCheckboxClick = (status: Status) => {

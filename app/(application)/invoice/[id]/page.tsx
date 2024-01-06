@@ -1,5 +1,6 @@
 "use client";
 
+import ErrorInvoice from "@/components/ErrorInvoice";
 import GoBackButton from "@/components/GoBackButton";
 import InvoiceDetailsActions from "@/components/InvoiceDetailsActions";
 import InvoiceStatus from "@/components/InvoiceStatus";
@@ -8,6 +9,7 @@ import { axiosInstance } from "@/lib/axios";
 import { getPaymentTermDays, getTotalInvoicePrice } from "@/lib/utils";
 import { FetchInvoice } from "@/types";
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { format } from "date-fns";
 import add from "date-fns/add";
 
@@ -22,7 +24,7 @@ const fetchInvoiceById = async (id: string): Promise<FetchInvoice> => {
 export default function InvoiceDetails({ params }: { params: { id: string } }) {
   const { id } = params;
 
-  const { data, isLoading, isError } = useQuery<FetchInvoice>({
+  const { data, isLoading, error } = useQuery<FetchInvoice>({
     queryFn: () => fetchInvoiceById(id),
     queryKey: ["invoices", id],
   });
@@ -35,8 +37,23 @@ export default function InvoiceDetails({ params }: { params: { id: string } }) {
     );
   }
 
-  if (isError || !data) {
-    return <h1>Something went wrong try maybe later!</h1>;
+  if (error || !data) {
+    let message = "Try maybe later!";
+
+    if (axios.isAxiosError(error)) {
+      const errorMessage = error.response?.data.message;
+      message = `Error: ${errorMessage}. ` + message;
+    }
+
+    return (
+      <main className="flex items-center justify-center">
+        <div className="max-w-[730px] px-6 md:px-10">
+          <ErrorInvoice>
+            <p>{message}</p>
+          </ErrorInvoice>
+        </div>
+      </main>
+    );
   }
 
   return (
