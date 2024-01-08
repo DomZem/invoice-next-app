@@ -12,6 +12,7 @@ import { axiosInstance } from "@/lib/axios";
 import { FetchInvoice } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 const INVOICES_PER_PAGE = 6;
@@ -68,12 +69,15 @@ const fetchInvoices = async (page: number) => {
 };
 
 export default function InvoicePage() {
-  const [page, setPage] = useState(1);
+  const searchParams = useSearchParams();
+  const page = parseInt(searchParams.get("page") || "1");
+
   const [selectedStatuses, setSelectedStatuses] = useState<Status[]>([
     "DRAFT",
     "PENDING",
     "PAID",
   ]);
+
   const { isLoading, error, data } = useQuery({
     queryKey: ["invoices", page],
     queryFn: () => fetchInvoices(page),
@@ -141,13 +145,9 @@ export default function InvoicePage() {
         <InvoiceList invoices={filteredInvoices} statuses={selectedStatuses} />
 
         <InvoicePagination
-          invoicesLength={filteredInvoices.length}
+          invoicesLength={invoices.length}
           page={page}
           lastPage={lastPage}
-          onPreviousButtonClick={() => setPage((old) => Math.max(old - 1, 0))}
-          onNextButtonClick={() => {
-            setPage((old) => old + 1);
-          }}
         />
       </section>
     </main>

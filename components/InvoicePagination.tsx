@@ -1,20 +1,21 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 import { Button } from "./ui/Button";
 
 interface InvoicePaginationProps {
   page: number;
   lastPage: number;
-  onPreviousButtonClick: () => void;
-  onNextButtonClick: () => void;
   invoicesLength: number;
 }
 
 export default function InvoicePagination({
   page,
   lastPage,
-  onPreviousButtonClick,
-  onNextButtonClick,
   invoicesLength,
 }: InvoicePaginationProps) {
+  const router = useRouter();
+
   return (
     <div className="flex items-center justify-between">
       <p className="invoice-detail-text">
@@ -24,7 +25,7 @@ export default function InvoicePagination({
       <div className="flex gap-3">
         <Button
           variant="outline"
-          onClick={onPreviousButtonClick}
+          onClick={() => router.push(`/invoice?page=${--page}`)}
           disabled={page === 1 || invoicesLength === 0}
         >
           Previous
@@ -32,7 +33,7 @@ export default function InvoicePagination({
 
         <Button
           variant="outline"
-          onClick={onNextButtonClick}
+          onClick={() => router.push(`/invoice?page=${++page}`)}
           disabled={page === lastPage || invoicesLength === 0}
         >
           Next
