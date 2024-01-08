@@ -1,6 +1,7 @@
 import CreateInvoice from "@/components/InvoiceForm/CreateInvoice";
 import { Invoice } from "@/components/InvoiceForm/formSchema";
 import Toaster from "@/components/ui/Toaster";
+import { API_URL } from "@/lib/axios";
 import { server } from "@/mocks/server";
 import { TestQueryProvider } from "@/providers/TestQueryProvider";
 import { render, screen } from "@testing-library/react";
@@ -182,7 +183,7 @@ describe("CreateInvoiceForm component", () => {
 
         it(`should display '${processingMessage}' message in toast when request is pending after click 'Save & Send' submit button`, async () => {
           server.use(
-            rest.post("http://localhost:8080/invoice", (req, res, ctx) => {
+            rest.post(`${API_URL}/invoice`, (req, res, ctx) => {
               return res(ctx.delay(200), ctx.status(200));
             }),
           );
@@ -199,7 +200,7 @@ describe("CreateInvoiceForm component", () => {
 
         it("should disable 'Save & Send' submit button after click when request is pending", async () => {
           server.use(
-            rest.post("http://localhost:8080/invoice", (req, res, ctx) => {
+            rest.post(`${API_URL}/invoice`, (req, res, ctx) => {
               return res(ctx.delay(500), ctx.status(200));
             }),
           );
@@ -214,7 +215,7 @@ describe("CreateInvoiceForm component", () => {
 
         it(`should display '${errorMessage}' error message in toast when error is not instance of axios after click 'Save & Send' submit button`, async () => {
           server.use(
-            rest.post("http://localhost:8080/invoice", (req, res, ctx) => {
+            rest.post(`${API_URL}/invoice`, (req, res, ctx) => {
               return res(ctx.status(403));
             }),
           );
@@ -244,7 +245,7 @@ describe("CreateInvoiceForm component", () => {
 
         it(`should display '${processingMessage}' message in toast when request is pending after click 'Save as Draft' submit button`, async () => {
           server.use(
-            rest.post("http://localhost:8080/invoice", (req, res, ctx) => {
+            rest.post(`${API_URL}/invoice`, (req, res, ctx) => {
               return res(ctx.delay(200), ctx.status(200));
             }),
           );
@@ -261,7 +262,7 @@ describe("CreateInvoiceForm component", () => {
 
         it("should disable 'Save as Draft' submit button after click when request is pending", async () => {
           server.use(
-            rest.post("http://localhost:8080/invoice", (req, res, ctx) => {
+            rest.post(`${API_URL}/invoice`, (req, res, ctx) => {
               return res(ctx.delay(500), ctx.status(200));
             }),
           );
@@ -276,7 +277,7 @@ describe("CreateInvoiceForm component", () => {
 
         it(`should display '${errorMessage}' error message in toast when error is not instance of axios after click 'Save as Draft' submit button`, async () => {
           server.use(
-            rest.post("http://localhost:8080/invoice", (req, res, ctx) => {
+            rest.post(`${API_URL}/invoice`, (req, res, ctx) => {
               return res(ctx.status(403));
             }),
           );

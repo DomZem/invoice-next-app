@@ -1,5 +1,6 @@
 import InvoiceDetailsActions from "@/components/InvoiceDetailsActions";
 import Toaster from "@/components/ui/Toaster";
+import { API_URL } from "@/lib/axios";
 import { server } from "@/mocks/server";
 import { TestQueryProvider } from "@/providers/TestQueryProvider";
 import { FetchInvoice } from "@/types";
@@ -156,7 +157,7 @@ describe("InvoiceDetailsActions", () => {
 
       it(`should display 'Deleting #${INVOICE_MARK} invoice ...' message in toast when request is loading`, async () => {
         server.use(
-          rest.delete("http://localhost:8080/invoice/:id", (req, res, ctx) => {
+          rest.delete(`${API_URL}/invoice/:id`, (req, res, ctx) => {
             return res(ctx.delay(300), ctx.status(200));
           }),
         );
@@ -175,7 +176,7 @@ describe("InvoiceDetailsActions", () => {
 
       it("should display 'Something went wrong. Invoice hasn't been deleted' error message in toast when error is not instance of axios", async () => {
         server.use(
-          rest.delete("http://localhost:8080/invoice/:id", (req, res, ctx) => {
+          rest.delete(`${API_URL}/invoice/:id`, (req, res, ctx) => {
             return res(ctx.status(403));
           }),
         );

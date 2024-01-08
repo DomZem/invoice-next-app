@@ -1,5 +1,6 @@
 import InvoiceMarkButton from "@/components/InvoiceMarkButton";
 import Toaster from "@/components/ui/Toaster";
+import { API_URL } from "@/lib/axios";
 import { server } from "@/mocks/server";
 import { TestQueryProvider } from "@/providers/TestQueryProvider";
 import "@testing-library/jest-dom";
@@ -64,7 +65,7 @@ describe("InvoiceMarkButton component", () => {
 
     it("should display 'Updating invoice status ...' message in toast when request is processing", async () => {
       server.use(
-        rest.patch("http://localhost:8080/invoice/:id", (req, res, ctx) => {
+        rest.patch(`${API_URL}/invoice/:id`, (req, res, ctx) => {
           return res(ctx.delay(300), ctx.status(200));
         }),
       );
@@ -142,7 +143,7 @@ describe("InvoiceMarkButton component", () => {
 
     it("should display 'Something went wrong. Invoice status hasn't been updated' error message in toast when error is not instance of axios", async () => {
       server.use(
-        rest.patch("http://localhost:8080/invoice/:id", (req, res, ctx) => {
+        rest.patch(`${API_URL}/invoice/:id`, (req, res, ctx) => {
           return res(ctx.status(403));
         }),
       );

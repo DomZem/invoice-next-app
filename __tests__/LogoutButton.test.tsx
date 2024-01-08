@@ -1,5 +1,6 @@
 import LogoutButton from "@/components/LogoutButton";
 import Toaster from "@/components/ui/Toaster";
+import { API_URL } from "@/lib/axios";
 import { server } from "@/mocks/server";
 import { TestQueryProvider } from "@/providers/TestQueryProvider";
 import { render, screen } from "@testing-library/react";
@@ -46,7 +47,7 @@ describe("LogoutButton", () => {
 
     it(`should display '${processingMessage}' message in toast when request is processing`, async () => {
       server.use(
-        rest.get("http://localhost:8080/auth/logout", (req, res, ctx) => {
+        rest.get(`${API_URL}/auth/logout`, (req, res, ctx) => {
           return res(ctx.delay(300), ctx.status(200));
         }),
       );
@@ -76,7 +77,7 @@ describe("LogoutButton", () => {
 
     it(`should display '${errorMessage}' error message in toast when error is not instance of axios `, async () => {
       server.use(
-        rest.get("http://localhost:8080/auth/logout", (req, res, ctx) => {
+        rest.get(`${API_URL}/auth/logout`, (req, res, ctx) => {
           return res(ctx.status(403));
         }),
       );

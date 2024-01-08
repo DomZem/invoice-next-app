@@ -1,23 +1,24 @@
+import { API_URL } from "@/lib/axios";
 import { rest } from "msw";
 
 export const handlers = [
-  rest.post("http://localhost:8080/invoice", (req, res, ctx) => {
+  rest.post(`${API_URL}/invoice`, (req, res, ctx) => {
     return res(ctx.status(200));
   }),
 
-  rest.patch("http://localhost:8080/invoice/:id", (req, res, ctx) => {
+  rest.patch(`${API_URL}/invoice/:id`, (req, res, ctx) => {
     return res(ctx.status(200));
   }),
 
-  rest.delete("http://localhost:8080/invoice/:id", (req, res, ctx) => {
+  rest.delete(`${API_URL}/invoice/:id`, (req, res, ctx) => {
     return res(ctx.status(200));
   }),
 
-  rest.get("http://localhost:8080/auth/logout", (req, res, ctx) => {
+  rest.get(`${API_URL}/auth/logout`, (req, res, ctx) => {
     return res(ctx.status(200));
   }),
 
-  rest.post("http://localhost:8080/auth/register", (req, res, ctx) => {
+  rest.post(`${API_URL}/auth/register`, (req, res, ctx) => {
     return res(ctx.status(200));
   }),
 ];

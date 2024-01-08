@@ -1,6 +1,7 @@
 import RegisterForm from "@/components/RegisterForm/RegisterForm";
 import { RegisterType } from "@/components/RegisterForm/formSchema";
 import Toaster from "@/components/ui/Toaster";
+import { API_URL } from "@/lib/axios";
 import { server } from "@/mocks/server";
 import { TestQueryProvider } from "@/providers/TestQueryProvider";
 import { render, screen } from "@testing-library/react";
@@ -307,7 +308,7 @@ describe("RegisterForm component", () => {
 
       it("should display 'Creating account ...' message in toast after click submit button when request is processing", async () => {
         server.use(
-          rest.post("http://localhost:8080/auth/register", (req, res, ctx) => {
+          rest.post(`${API_URL}/auth/register`, (req, res, ctx) => {
             return res(ctx.delay(300), ctx.status(200));
           }),
         );
@@ -322,7 +323,7 @@ describe("RegisterForm component", () => {
 
       it("should display 'Something went wrong. Account hasn't been created' message in toast after click submit button when request is error and is not instance of axios", async () => {
         server.use(
-          rest.post("http://localhost:8080/auth/register", (req, res, ctx) => {
+          rest.post(`${API_URL}/auth/register`, (req, res, ctx) => {
             return res(ctx.status(403));
           }),
         );
@@ -339,7 +340,7 @@ describe("RegisterForm component", () => {
 
       it("should disabled submit button after click when request is processing", async () => {
         server.use(
-          rest.post("http://localhost:8080/auth/register", (req, res, ctx) => {
+          rest.post(`${API_URL}/auth/register`, (req, res, ctx) => {
             return res(ctx.delay(300), ctx.status(200));
           }),
         );
