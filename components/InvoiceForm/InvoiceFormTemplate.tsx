@@ -366,7 +366,12 @@ export default function InvoiceFormTemplate({
                 : "justify-end"
             }`}
           >
-            <Button type="button" variant="secondary" asChild>
+            <Button
+              type="button"
+              className="px-[13px] md:px-6"
+              variant="secondary"
+              asChild
+            >
               <SheetClose>
                 {variant === "create" && "Discard"}
                 {variant === "update" && "Cancel"}
@@ -384,7 +389,7 @@ export default function InvoiceFormTemplate({
                     }
                   })}
                   disabled={isPending}
-                  className="text-clip"
+                  className="px-[13px] md:px-6"
                   type="submit"
                   variant="outline"
                 >
@@ -393,7 +398,11 @@ export default function InvoiceFormTemplate({
               )}
 
               {/* If user submit that button the status will be 'PENDING' */}
-              <Button type="submit" disabled={isPending}>
+              <Button
+                type="submit"
+                className="px-[13px] md:px-6"
+                disabled={isPending}
+              >
                 {variant === "create" && "Save & Send"}
                 {variant === "update" && "Save Changes"}
               </Button>
