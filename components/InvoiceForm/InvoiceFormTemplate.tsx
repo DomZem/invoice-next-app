@@ -13,7 +13,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import { MdCalendarToday } from "react-icons/md";
-import { Button } from "../ui/Button";
 import { Calendar } from "../ui/Calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/Popover";
 import {
@@ -24,8 +23,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/Select";
-import { SheetClose } from "../ui/Sheet";
 import ItemsFieldArray from "./ItemsFieldArray";
+import SubmitButtons from "./SubmitButtons";
 import { Invoice, invoiceFormSchema } from "./formSchema";
 
 interface InvoiceFormTemplateProps {
@@ -356,59 +355,16 @@ export default function InvoiceFormTemplate({
           </div>
         </div>
 
-        {/* Form buttons */}
-        <div className="flex-shrink-0">
-          <div className="h-16 w-full bg-shadow"></div>
-          <div
-            className={`flex items-center gap-2 px-6 py-[21px] ${
-              variant === "create"
-                ? "justify-end md:justify-between"
-                : "justify-end"
-            }`}
-          >
-            <Button
-              type="button"
-              className="px-[13px] md:px-6"
-              variant="secondary"
-              asChild
-            >
-              <SheetClose>
-                {variant === "create" && "Discard"}
-                {variant === "update" && "Cancel"}
-              </SheetClose>
-            </Button>
-
-            <div className="flex items-center gap-2">
-              {/* If user submit that button the status will be 'DRAFT' */}
-              {variant === "create" && (
-                <Button
-                  onClick={methods.handleSubmit((data) => {
-                    onSubmit({ ...data, status: "DRAFT" });
-                    if (isSuccess) {
-                      methods.reset();
-                    }
-                  })}
-                  disabled={isPending}
-                  className="px-[13px] md:px-6"
-                  type="submit"
-                  variant="outline"
-                >
-                  Save as Draft
-                </Button>
-              )}
-
-              {/* If user submit that button the status will be 'PENDING' */}
-              <Button
-                type="submit"
-                className="px-[13px] md:px-6"
-                disabled={isPending}
-              >
-                {variant === "create" && "Save & Send"}
-                {variant === "update" && "Save Changes"}
-              </Button>
-            </div>
-          </div>
-        </div>
+        <SubmitButtons
+          variant={variant}
+          isPending={isPending}
+          onSaveSubmit={methods.handleSubmit((data) => {
+            onSubmit({ ...data, status: "DRAFT" });
+            if (isSuccess) {
+              methods.reset();
+            }
+          })}
+        />
       </form>
     </Form>
   );
