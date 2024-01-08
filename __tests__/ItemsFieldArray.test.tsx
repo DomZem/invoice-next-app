@@ -1,4 +1,4 @@
-import ItemsFieldArray from "@/components/InvoiceForm/ItemsFieldArray";
+import ItemsFieldArray from "@/components/InvoiceForm/Fields/ItemsFieldArray";
 import { Item } from "@/components/InvoiceForm/formSchema";
 import { InvoiceFormProvider } from "@/providers/InvoiceFormProvider";
 import { render, screen } from "@testing-library/react";

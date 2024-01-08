@@ -1,5 +1,5 @@
-import { Button } from "../ui/Button";
-import { SheetClose } from "../ui/Sheet";
+import { Button } from "../../ui/Button";
+import { SheetClose } from "../../ui/Sheet";
 
 interface SubmitButtonsProps {
   variant: "create" | "update";
