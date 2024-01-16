@@ -21,12 +21,20 @@
   }
 
   body {
-    @apply bg-whisperWhite text-heatherGray dark:bg-darkAbyss dark:text-softLavender text-body-variant;
+    @apply bg-whisperWhite text-body-variant text-heatherGray dark:bg-darkAbyss dark:text-softLavender;
   }
 }
 
 @layer utilities {
+  .logo {
+    @apply relative;
+  }
+
+  .logo::after {
+    @apply absolute bottom-0 right-0 h-1/2 w-full rounded-br-[20px] rounded-tl-[20px] bg-primaryHover content-[""];
+  }
+
   .action-button {
-    @apply text-bluebellGray hover:text-softLavender text-[19px] duration-200;
+    @apply text-[19px] text-bluebellGray duration-200 hover:text-softLavender;
   }
 }
