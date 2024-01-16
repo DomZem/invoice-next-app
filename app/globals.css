@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: #7c5dfa;
+    --primaryHover: #9277ff;
+
+    --midnightBlue: #1e2139;
+    --darkRoyalBlue: #252945;
+    --softLavender: #dfe3fa;
+    --heatherGray: #888eb0;
+    --bluebellGray: #7e88c3;
+    --starlessNight: #0c0e16;
+    --whisperWhite: #f8f8fb;
+    --darkAbyss: #141625;
+
+    --destructive: #ec5757;
+    --destructiveHover: #ff9797;
+  }
+
+  body {
+    @apply bg-whisperWhite text-heatherGray dark:bg-darkAbyss dark:text-softLavender text-body-variant;
+  }
+}
