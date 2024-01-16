@@ -24,3 +24,9 @@
     @apply bg-whisperWhite text-heatherGray dark:bg-darkAbyss dark:text-softLavender text-body-variant;
   }
 }
+
+@layer utilities {
+  .action-button {
+    @apply text-bluebellGray hover:text-softLavender text-[19px] duration-200;
+  }
+}
