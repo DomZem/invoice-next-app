@@ -115,7 +115,7 @@ export default function InvoicesPage() {
       </section>
 
       <section className="flex flex-1 flex-col gap-5 overflow-hidden">
-        <InvoiceList invoices={filteredInvoices} />
+        <InvoiceList invoices={filteredInvoices} statuses={selectedStatuses} />
 
         <InvoicePagination
           invoicesLength={invoices.length}

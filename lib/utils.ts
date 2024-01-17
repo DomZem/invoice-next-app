@@ -13,6 +13,20 @@ export const capitalizeFirstLetter = (inputString: string): string => {
   return `${firstLetter}${restOfString}`;
 };
 
+export const formatList = (items: string[]): string => {
+  if (items.length === 0) {
+    return '';
+  } else if (items.length === 1) {
+    return capitalizeFirstLetter(items[0]);
+  } else {
+    const formattedItems = items
+      .slice(0, -1)
+      .map((item) => capitalizeFirstLetter(item));
+    const lastItem = capitalizeFirstLetter(items[items.length - 1]);
+    return `${formattedItems.join(', ')} or ${lastItem}`;
+  }
+};
+
 export const getTotalInvoicePrice = (items: Item[]) => {
   return items.reduce((acc, { price, quantity }) => acc + price * quantity, 0);
 };
