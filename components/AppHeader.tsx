@@ -1,6 +1,6 @@
 import Logo from '@/public/logo.svg';
 import Image from 'next/image';
-import { MdLogout } from 'react-icons/md';
+import LogoutButton from './LogoutButton';
 import ModeToggle from './UI/ModeToggle';
 import UserImage from './UserImage';
 
@@ -20,7 +20,7 @@ export default function AppHeader() {
             <ModeToggle />
           </li>
           <li className="flex items-center justify-center p-4 md:p-6">
-            <MdLogout className="action-button" />
+            <LogoutButton />
           </li>
         </ul>
         <div className="flex h-full items-center justify-center border-l border-[#494E6E] p-6 md:p-8 lg:border-l-0 lg:border-t lg:p-6">
