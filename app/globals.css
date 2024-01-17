@@ -37,4 +37,9 @@
   .action-button {
     @apply text-[19px] text-bluebellGray duration-200 hover:text-softLavender;
   }
+
+  .popover-content {
+    width: var(--radix-popover-trigger-width);
+    max-height: var(--radix-popover-content-available-height);
+  }
 }
