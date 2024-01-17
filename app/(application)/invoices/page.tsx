@@ -3,6 +3,7 @@
 import CreateInvoice from '@/components/InvoiceForm/CreateInvoice';
 import { defaultValues } from '@/components/InvoiceForm/formSchema';
 import InvoiceHeader from '@/components/InvoiceHeader';
+import InvoiceList from '@/components/InvoiceList';
 import Loading from '@/components/UI/Loading';
 import { axiosInstance } from '@/lib/axios';
 import { FetchInvoice } from '@/types';
@@ -72,7 +73,7 @@ export default function InvoicesPage() {
       </section>
 
       <section className="flex flex-1 flex-col gap-5 overflow-hidden">
-        {/* Invoice list */}
+        <InvoiceList invoices={invoices} />
       </section>
     </main>
   );
