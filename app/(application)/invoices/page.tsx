@@ -1,5 +1,6 @@
 'use client';
 
+import InvoiceError from '@/components/InvoiceError';
 import CreateInvoice from '@/components/InvoiceForm/CreateInvoice';
 import { Status, defaultValues } from '@/components/InvoiceForm/formSchema';
 import InvoiceHeader from '@/components/InvoiceHeader';
@@ -10,6 +11,7 @@ import Loading from '@/components/UI/Loading';
 import { axiosInstance } from '@/lib/axios';
 import { FetchInvoice } from '@/types';
 import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
@@ -62,9 +64,20 @@ export default function InvoicesPage() {
   }
 
   if (error || !data) {
+    let message = 'Try maybe later!';
+
+    if (axios.isAxiosError(error)) {
+      const errorMessage = error.response?.data.message;
+      message = `Error: ${errorMessage}. ` + message;
+    }
+
     return (
       <main className="flex items-center justify-center">
-        <h1>Somehting went wrong</h1>
+        <div className="max-w-[730px] px-6 md:px-10">
+          <InvoiceError>
+            <p>{message}</p>
+          </InvoiceError>
+        </div>
       </main>
     );
   }
