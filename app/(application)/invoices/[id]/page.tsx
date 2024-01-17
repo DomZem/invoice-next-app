@@ -1,6 +1,7 @@
 'use client';
 
 import GoBackButton from '@/components/GoBackButton';
+import InvoiceDetailsActions from '@/components/InvoiceDetailsActions';
 import InvoiceError from '@/components/InvoiceError';
 import InvoiceStatus from '@/components/InvoiceStatus';
 import Loading from '@/components/UI/Loading';
@@ -71,7 +72,9 @@ export default function InvoiceDetails({ params }: InvoiceDetailsProps) {
             <p>Status</p>
             <InvoiceStatus status={data.status} />
           </div>
-          <div className="hidden md:block">{/* Invoice Details Actions */}</div>
+          <div className="hidden md:block">
+            <InvoiceDetailsActions data={data} />
+          </div>
         </section>
 
         <section className="rounded-lg bg-white p-6 shadow-wrapper dark:bg-midnightBlue md:p-8">
@@ -184,7 +187,7 @@ export default function InvoiceDetails({ params }: InvoiceDetailsProps) {
       </div>
 
       <section className="absolute bottom-0 flex w-full justify-center bg-white px-6 py-5 dark:bg-midnightBlue md:hidden">
-        {/* Invoice Details Actions */}
+        <InvoiceDetailsActions data={data} />
       </section>
     </main>
   );
