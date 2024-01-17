@@ -45,6 +45,15 @@
   body {
     @apply bg-whisperWhite text-body-variant text-heatherGray dark:bg-darkAbyss dark:text-softLavender;
   }
+
+  /* Hide input arrows on type number */
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+  }
 }
 
 @layer utilities {
