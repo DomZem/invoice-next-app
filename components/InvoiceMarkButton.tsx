@@ -57,7 +57,7 @@ export default function InvoiceMarkButton({
         },
       }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['invoices', id] });
+      queryClient.invalidateQueries({ queryKey: ['invoices'] });
     },
   });
 
