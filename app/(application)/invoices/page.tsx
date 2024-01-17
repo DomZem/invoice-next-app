@@ -4,6 +4,7 @@ import CreateInvoice from '@/components/InvoiceForm/CreateInvoice';
 import { Status, defaultValues } from '@/components/InvoiceForm/formSchema';
 import InvoiceHeader from '@/components/InvoiceHeader';
 import InvoiceList from '@/components/InvoiceList';
+import InvoicePagination from '@/components/InvoicePagination';
 import InvoiceStatusFilter from '@/components/InvoiceStatusFilter';
 import Loading from '@/components/UI/Loading';
 import { axiosInstance } from '@/lib/axios';
@@ -79,6 +80,8 @@ export default function InvoicesPage() {
   };
 
   const invoices = data.data;
+  const { lastPage } = data.meta;
+
   const filteredInvoices = invoices.filter((invoice) =>
     selectedStatuses.some((value) => invoice.status === value),
   );
@@ -100,6 +103,12 @@ export default function InvoicesPage() {
 
       <section className="flex flex-1 flex-col gap-5 overflow-hidden">
         <InvoiceList invoices={filteredInvoices} />
+
+        <InvoicePagination
+          invoicesLength={invoices.length}
+          page={page}
+          lastPage={lastPage}
+        />
       </section>
     </main>
   );
