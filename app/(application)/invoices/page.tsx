@@ -31,7 +31,7 @@ type FetchPaginationInvoice = {
 
 const fetchInvoices = async (page: number) => {
   const response = await axiosInstance.get<FetchPaginationInvoice>(
-    `/invoice?page=${page}&perPage=${INVOICES_PER_PAGE}`,
+    `/invoice?page=${page}&size=${INVOICES_PER_PAGE}`,
     {
       withCredentials: true,
     },

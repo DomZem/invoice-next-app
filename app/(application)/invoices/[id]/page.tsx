@@ -110,7 +110,7 @@ export default function InvoiceDetails({ params }: InvoiceDetailsProps) {
                       add(new Date(data.date), {
                         days: getPaymentTermDays(data.paymentTerm),
                       }),
-                      'd LLL Y',
+                      'd LLL y',
                     )}
                   </p>
                 </div>

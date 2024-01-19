@@ -1,6 +1,4 @@
-import Toaster from '@/components/UI/Toaster';
-import QueryProvider from '@/providers/QueryProvider';
-import { ThemeProvider } from '@/providers/ThemeProvider';
+import AppProvider from '@/providers/AppProvider';
 import type { Metadata } from 'next';
 import { League_Spartan } from 'next/font/google';
 import './globals.css';
@@ -20,16 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={leagueSpartan.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          disableTransitionOnChange
-        >
-          <QueryProvider>
-            {children}
-            <Toaster />
-          </QueryProvider>
-        </ThemeProvider>
+        <AppProvider>{children}</AppProvider>
       </body>
     </html>
   );

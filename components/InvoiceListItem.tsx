@@ -26,7 +26,7 @@ export function InvoiceListItem({
           </section>
           <section className="flex items-center justify-between">
             <div>
-              <p>Due {format(new Date(date), 'd LLL Y')}</p>
+              <p>Due {format(new Date(date), 'd LLL y')}</p>
               <p className="mt-[9px] text-heading-s text-starlessNight dark:text-white">
                 £ {getTotalInvoicePrice(items).toFixed(2)}
               </p>
@@ -48,7 +48,7 @@ export function InvoiceListItem({
                 add(new Date(date), {
                   days: getPaymentTermDays(paymentTerm),
                 }),
-                'd LLL Y',
+                'd LLL y',
               )}
             </p>
           </section>
