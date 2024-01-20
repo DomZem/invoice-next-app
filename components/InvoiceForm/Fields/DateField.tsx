@@ -27,8 +27,6 @@ export default function DateField({ variant }: DateFieldProps) {
     <FormField
       control={control}
       name="date"
-      disabled={variant === 'update'}
-      shouldUnregister={variant === 'update'}
       render={({ field }) => (
         <FormItem className="flex flex-col">
           <FormLabel>invoice date</FormLabel>
