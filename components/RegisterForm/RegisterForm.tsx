@@ -1,10 +1,13 @@
 'use client';
 
 import { axiosInstance } from '@/lib/axios';
+import { UserContext, UserContextType } from '@/providers/UserProvider';
+import { User } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
+import { useContext } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { LuLoader2 } from 'react-icons/lu';
@@ -20,10 +23,12 @@ import {
 import { Input } from '../UI/Input';
 import { RegisterType, registerFormSchema } from './formSchema';
 
-const register = async (data: RegisterType) => {
-  return axiosInstance.post('/auth/register', data, {
+const register = async (data: RegisterType): Promise<User> => {
+  const response = await axiosInstance.post('/auth/register', data, {
     withCredentials: true,
   });
+
+  return response.data;
 };
 
 interface RegisterFormProps {
@@ -36,6 +41,7 @@ export default function RegisterForm({ defaultValues }: RegisterFormProps) {
     defaultValues,
   });
 
+  const { setUser } = useContext(UserContext) as UserContextType;
   const router = useRouter();
 
   const { mutate, isPending } = useMutation({
@@ -57,7 +63,8 @@ export default function RegisterForm({ defaultValues }: RegisterFormProps) {
           return message;
         },
       }),
-    onSuccess: () => {
+    onSuccess: (user) => {
+      setUser(user);
       router.push('/invoices');
     },
   });
