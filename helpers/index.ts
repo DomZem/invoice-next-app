@@ -29,3 +29,11 @@ export const getFetchedInvoice = (): FetchInvoice => ({
     },
   ],
 });
+
+export const createStringWithLength = (length: number): string => {
+  if (length < 0) {
+    throw new Error('Length should be a non-negative number');
+  }
+
+  return Array(length + 1).join('x');
+};

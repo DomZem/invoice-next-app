@@ -23,7 +23,7 @@ export default function BillFromFields() {
           <FormItem>
             <div className="flex items-center justify-between">
               <FormLabel>street address</FormLabel>
-              <FormMessage />
+              <FormMessage data-testid="streetAddressErrorMessage" />
             </div>
 
             <FormControl>
@@ -41,7 +41,7 @@ export default function BillFromFields() {
             <FormItem>
               <div className="flex items-center justify-between">
                 <FormLabel>city</FormLabel>
-                <FormMessage />
+                <FormMessage data-testid="cityErrorMessage" />
               </div>
 
               <FormControl>
@@ -58,7 +58,7 @@ export default function BillFromFields() {
             <FormItem>
               <div className="flex items-center justify-between">
                 <FormLabel>post code</FormLabel>
-                <FormMessage />
+                <FormMessage data-testid="postCodeErrorMessage" />
               </div>
 
               <FormControl>
@@ -75,7 +75,7 @@ export default function BillFromFields() {
             <FormItem className="col-span-full md:col-span-1">
               <div className="flex items-center justify-between">
                 <FormLabel>country</FormLabel>
-                <FormMessage />
+                <FormMessage data-testid="countryErrorMessage" />
               </div>
 
               <FormControl>
