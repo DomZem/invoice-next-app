@@ -22,7 +22,7 @@ export default function BillToFields() {
         render={({ field }) => (
           <FormItem>
             <div className="flex items-center justify-between">
-              <FormLabel>client's name</FormLabel>
+              <FormLabel>client&apos;s name</FormLabel>
               <FormMessage />
             </div>
 
@@ -39,7 +39,7 @@ export default function BillToFields() {
         render={({ field }) => (
           <FormItem>
             <div className="flex items-center justify-between">
-              <FormLabel>client's email</FormLabel>
+              <FormLabel>client&apos;s email</FormLabel>
               <FormMessage />
             </div>
 

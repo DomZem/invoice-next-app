@@ -10,8 +10,7 @@ import { getPaymentTermDays, getTotalInvoicePrice } from '@/lib/utils';
 import { FetchInvoice } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { format } from 'date-fns';
-import add from 'date-fns/add';
+import { add, format } from 'date-fns';
 
 const fetchInvoiceById = async (id: string): Promise<FetchInvoice> => {
   const response = await axiosInstance.get<FetchInvoice>(`/invoice/${id}`, {

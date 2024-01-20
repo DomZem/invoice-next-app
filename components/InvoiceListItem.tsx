@@ -1,7 +1,6 @@
 import { getPaymentTermDays, getTotalInvoicePrice } from '@/lib/utils';
 import { FetchInvoice } from '@/types';
-import { format } from 'date-fns';
-import add from 'date-fns/add';
+import { add, format } from 'date-fns';
 import Link from 'next/link';
 import InvoiceStatus from './InvoiceStatus';
 
