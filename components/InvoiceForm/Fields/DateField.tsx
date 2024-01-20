@@ -31,13 +31,13 @@ export default function DateField({ variant }: DateFieldProps) {
       shouldUnregister={variant === 'update'}
       render={({ field }) => (
         <FormItem className="flex flex-col">
-          <FormLabel>Invoice Date</FormLabel>
+          <FormLabel>invoice date</FormLabel>
           <Popover>
             <PopoverTrigger disabled={variant === 'update'} asChild>
               <FormControl>
                 <button className="flex rounded border-[1px] border-softLavender px-5 py-4 text-heading-s-variant text-starlessNight outline-primaryHover disabled:cursor-not-allowed disabled:opacity-50 dark:border-darkRoyalBlue dark:bg-midnightBlue dark:text-white">
                   {field.value ? (
-                    format(new Date(field.value), 'd LLL Y')
+                    format(new Date(field.value), 'd LLL y')
                   ) : (
                     <span>Pick a date</span>
                   )}
