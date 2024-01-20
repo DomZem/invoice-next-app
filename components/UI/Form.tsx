@@ -120,10 +120,7 @@ const FormInput = React.forwardRef<
   return (
     <Input
       ref={ref}
-      className={cn(
-        error && 'border-destructive outline-destructive',
-        className,
-      )}
+      className={cn(error && 'border-destructive ring-destructive', className)}
       {...props}
     />
   );
@@ -171,7 +168,7 @@ const FormMessage = React.forwardRef<
       ref={ref}
       id={formMessageId}
       className={cn(
-        'text-destructive font-semibold leading-[15px] tracking-[-0.208px]',
+        'font-semibold leading-[15px] tracking-[-0.208px] text-destructive',
         className,
       )}
       {...props}

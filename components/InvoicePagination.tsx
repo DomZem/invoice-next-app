@@ -18,7 +18,7 @@ export default function InvoicePagination({
 
   return (
     <div className="flex items-center justify-between">
-      <p className="text-invoice-detail">
+      <p className="text-invoice-detail text-starlessNight dark:text-white">
         Current page: <span className="">{page}</span>
       </p>
 

@@ -22,7 +22,7 @@ function Calendar({
     <DayPicker
       showOutsideDays={showOutsideDays}
       className={cn(
-        'px-5 py-7 text-heading-s-variant text-starlessNight dark:text-softLavender',
+        'input-text px-5 py-7 text-starlessNight dark:text-softLavender',
         className,
       )}
       classNames={{

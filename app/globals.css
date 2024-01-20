@@ -73,4 +73,12 @@
     width: var(--radix-popover-trigger-width);
     max-height: var(--radix-popover-content-available-height);
   }
+
+  .input-text {
+    @apply text-heading-s-variant;
+  }
+
+  .invoice-detail-text {
+    @apply text-invoice-detail text-starlessNight dark:text-white;
+  }
 }

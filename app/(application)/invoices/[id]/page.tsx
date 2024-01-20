@@ -98,13 +98,13 @@ export default function InvoiceDetails({ params }: InvoiceDetailsProps) {
               <div className="flex flex-col gap-[31px]">
                 <div>
                   <p>Invoice Date</p>
-                  <p className="text-invoice-detail">
+                  <p className="invoice-detail-text">
                     {format(new Date(data.date), 'd LLL Y')}
                   </p>
                 </div>
                 <div>
                   <p>Payment Due</p>
-                  <p className="text-invoice-detail">
+                  <p className="invoice-detail-text">
                     {format(
                       add(new Date(data.date), {
                         days: getPaymentTermDays(data.paymentTerm),
@@ -116,7 +116,7 @@ export default function InvoiceDetails({ params }: InvoiceDetailsProps) {
               </div>
               <div>
                 <p>Bill To</p>
-                <p className="mb-[7px] text-invoice-detail">
+                <p className="invoice-detail-text mb-[7px]">
                   {data.clientName}
                 </p>
                 <p>{data.billToAddress.streetName}</p>
@@ -128,7 +128,7 @@ export default function InvoiceDetails({ params }: InvoiceDetailsProps) {
 
             <div>
               <p>Sent to</p>
-              <p className="text-invoice-detail">{data.clientEmail}</p>
+              <p className="invoice-detail-text">{data.clientEmail}</p>
             </div>
           </div>
 

@@ -10,7 +10,7 @@ export default function GoBackButton() {
       className="flex items-center gap-6 text-heading-s text-starlessNight dark:text-white"
       onClick={() => router.back()}
     >
-      <MdKeyboardArrowLeft className="text-primary" />
+      <MdKeyboardArrowLeft className="text-lg text-primary" />
       Go back
     </button>
   );
