@@ -1,13 +1,11 @@
 'use client';
 
 import { axiosInstance } from '@/lib/axios';
-import { UserContext, UserContextType } from '@/providers/UserProvider';
 import { User } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
-import { useContext } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { LuLoader2 } from 'react-icons/lu';
@@ -41,7 +39,6 @@ export default function RegisterForm({ defaultValues }: RegisterFormProps) {
     defaultValues,
   });
 
-  const { setUser } = useContext(UserContext) as UserContextType;
   const router = useRouter();
 
   const { mutate, isPending } = useMutation({
@@ -63,8 +60,7 @@ export default function RegisterForm({ defaultValues }: RegisterFormProps) {
           return message;
         },
       }),
-    onSuccess: (user) => {
-      setUser(user);
+    onSuccess: () => {
       router.push('/invoices');
     },
   });

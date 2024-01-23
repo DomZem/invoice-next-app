@@ -2,7 +2,7 @@ import Logo from '@/public/logo.svg';
 import Image from 'next/image';
 import LogoutButton from './LogoutButton';
 import ModeToggle from './UI/ModeToggle';
-import UserImage from './UserImage';
+import UserAvatar from './UserAvatar';
 
 export default function AppHeader() {
   return (
@@ -24,7 +24,7 @@ export default function AppHeader() {
           </li>
         </ul>
         <div className="flex h-full items-center justify-center border-l border-[#494E6E] p-6 md:p-8 lg:border-l-0 lg:border-t lg:p-6">
-          <UserImage />
+          <UserAvatar />
         </div>
       </section>
     </header>
