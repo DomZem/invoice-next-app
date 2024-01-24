@@ -1,13 +1,8 @@
 'use client';
 
-import { axiosInstance } from '@/lib/axios';
-import { User } from '@/types';
+import useRegisterMutation from '@/hooks/useRegisterMutation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
-import axios, { AxiosError } from 'axios';
-import { useRouter } from 'next/navigation';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
+import { useForm } from 'react-hook-form';
 import { LuLoader2 } from 'react-icons/lu';
 import { Button } from '../UI/Button';
 import {
@@ -21,14 +16,6 @@ import {
 import { Input } from '../UI/Input';
 import { RegisterType, registerFormSchema } from './formSchema';
 
-const register = async (data: RegisterType): Promise<User> => {
-  const response = await axiosInstance.post('/auth/register', data, {
-    withCredentials: true,
-  });
-
-  return response.data;
-};
-
 interface RegisterFormProps {
   defaultValues: RegisterType;
 }
@@ -39,39 +26,14 @@ export default function RegisterForm({ defaultValues }: RegisterFormProps) {
     defaultValues,
   });
 
-  const router = useRouter();
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: (data: RegisterType) =>
-      toast.promise(register(data), {
-        loading: 'Creating account ...',
-        success: 'Account has been created 🔥',
-        error: (error: Error | AxiosError) => {
-          let message = "Something went wrong. Account hasn't been created";
-
-          if (axios.isAxiosError(error)) {
-            const errorMessage = error.response?.data.message;
-
-            if (errorMessage) {
-              return `${message}. Error: ${errorMessage}`;
-            }
-          }
-
-          return message;
-        },
-      }),
-    onSuccess: () => {
-      router.push('/invoices');
-    },
-  });
-
-  const onSubmit: SubmitHandler<RegisterType> = (data) => {
-    mutate(data);
-  };
+  const { mutate, isPending } = useRegisterMutation();
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form
+        onSubmit={form.handleSubmit((data) => mutate(data))}
+        className="space-y-6"
+      >
         <div className="grid grid-cols-2 gap-6">
           <FormField
             control={form.control}
