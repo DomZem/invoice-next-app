@@ -5,20 +5,10 @@ import InvoiceDetailsActions from '@/components/InvoiceDetailsActions';
 import InvoiceError from '@/components/InvoiceError';
 import InvoiceStatus from '@/components/InvoiceStatus';
 import Loading from '@/components/UI/Loading';
-import { axiosInstance } from '@/lib/axios';
+import useInvoiceQuery from '@/hooks/useInvoiceQuery';
 import { getPaymentTermDays, getTotalInvoicePrice } from '@/lib/utils';
-import { FetchInvoice } from '@/types';
-import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { add, format } from 'date-fns';
-
-const fetchInvoiceById = async (id: string): Promise<FetchInvoice> => {
-  const response = await axiosInstance.get<FetchInvoice>(`/invoice/${id}`, {
-    withCredentials: true,
-  });
-
-  return response.data;
-};
 
 interface InvoiceDetailsProps {
   params: {
@@ -28,11 +18,7 @@ interface InvoiceDetailsProps {
 
 export default function InvoiceDetails({ params }: InvoiceDetailsProps) {
   const { id } = params;
-
-  const { data, isLoading, error } = useQuery<FetchInvoice>({
-    queryFn: () => fetchInvoiceById(id),
-    queryKey: ['invoices', id],
-  });
+  const { data: invoice, isLoading, error } = useInvoiceQuery(id);
 
   if (isLoading) {
     return (
@@ -42,7 +28,7 @@ export default function InvoiceDetails({ params }: InvoiceDetailsProps) {
     );
   }
 
-  if (error || !data) {
+  if (error || !invoice) {
     let message = 'Try maybe later!';
 
     if (axios.isAxiosError(error)) {
@@ -61,6 +47,19 @@ export default function InvoiceDetails({ params }: InvoiceDetailsProps) {
     );
   }
 
+  const {
+    mark,
+    status,
+    billFromAddress,
+    billToAddress,
+    clientName,
+    clientEmail,
+    date,
+    items,
+    paymentTerm,
+    projectDescription,
+  } = invoice;
+
   return (
     <main className="relative h-full overflow-hidden">
       <div className="mx-auto h-full max-w-[730px] overflow-y-auto px-6 py-[147px] pt-[33px] md:px-10 md:py-[49px] lg:py-[65px]">
@@ -69,10 +68,10 @@ export default function InvoiceDetails({ params }: InvoiceDetailsProps) {
         <section className="mb-4 mt-[31px] rounded-lg bg-white p-6 shadow-wrapper dark:bg-midnightBlue md:mb-6 md:flex md:items-center md:justify-between md:px-8 md:pt-5">
           <div className="flex items-center justify-between md:gap-5">
             <p>Status</p>
-            <InvoiceStatus status={data.status} />
+            <InvoiceStatus status={status} />
           </div>
           <div className="hidden md:block">
-            <InvoiceDetailsActions data={data} />
+            <InvoiceDetailsActions data={invoice} />
           </div>
         </section>
 
@@ -81,15 +80,15 @@ export default function InvoiceDetails({ params }: InvoiceDetailsProps) {
             <div>
               <h3 className="mb-1 text-heading-s-variant text-starlessNight dark:text-white">
                 <span className="text-bluebellGray">#</span>
-                {data.mark}
+                {mark}
               </h3>
-              <p>{data.projectDescription}</p>
+              <p>{projectDescription}</p>
             </div>
             <div>
-              <p>{data.billFromAddress.streetName}</p>
-              <p>{data.billFromAddress.city}</p>
-              <p>{data.billFromAddress.postCode}</p>
-              <p>{data.billFromAddress.country}</p>
+              <p>{billFromAddress.streetName}</p>
+              <p>{billFromAddress.city}</p>
+              <p>{billFromAddress.postCode}</p>
+              <p>{billFromAddress.country}</p>
             </div>
           </div>
 
@@ -99,15 +98,15 @@ export default function InvoiceDetails({ params }: InvoiceDetailsProps) {
                 <div>
                   <p>Invoice Date</p>
                   <p className="invoice-detail-text">
-                    {format(new Date(data.date), 'd LLL Y')}
+                    {format(new Date(date), 'd LLL Y')}
                   </p>
                 </div>
                 <div>
                   <p>Payment Due</p>
                   <p className="invoice-detail-text">
                     {format(
-                      add(new Date(data.date), {
-                        days: getPaymentTermDays(data.paymentTerm),
+                      add(new Date(date), {
+                        days: getPaymentTermDays(paymentTerm),
                       }),
                       'd LLL y',
                     )}
@@ -116,25 +115,23 @@ export default function InvoiceDetails({ params }: InvoiceDetailsProps) {
               </div>
               <div>
                 <p>Bill To</p>
-                <p className="invoice-detail-text mb-[7px]">
-                  {data.clientName}
-                </p>
-                <p>{data.billToAddress.streetName}</p>
-                <p>{data.billToAddress.city}</p>
-                <p>{data.billToAddress.postCode}</p>
-                <p>{data.billToAddress.country}</p>
+                <p className="invoice-detail-text mb-[7px]">{clientName}</p>
+                <p>{billToAddress.streetName}</p>
+                <p>{billToAddress.city}</p>
+                <p>{billToAddress.postCode}</p>
+                <p>{billToAddress.country}</p>
               </div>
             </div>
 
             <div>
               <p>Sent to</p>
-              <p className="invoice-detail-text">{data.clientEmail}</p>
+              <p className="invoice-detail-text">{clientEmail}</p>
             </div>
           </div>
 
           <div>
             <ul className="flex flex-col gap-6 rounded-t-lg bg-[#F9FAFE] p-6 dark:bg-darkRoyalBlue md:hidden">
-              {data.items.map(({ name, quantity, price }) => (
+              {items.map(({ name, quantity, price }) => (
                 <li
                   className="flex items-center justify-between text-heading-s-variant text-starlessNight dark:text-white"
                   key={name}
@@ -160,7 +157,7 @@ export default function InvoiceDetails({ params }: InvoiceDetailsProps) {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.items.map(({ name, quantity, price }) => (
+                  {items.map(({ name, quantity, price }) => (
                     <tr className="text-heading-s-variant" key={name}>
                       <td className="pt-8 text-starlessNight dark:text-white">
                         {name}
@@ -178,7 +175,7 @@ export default function InvoiceDetails({ params }: InvoiceDetailsProps) {
             <div className="flex items-center justify-between rounded-b-lg bg-[#373B53] p-6 text-white dark:bg-starlessNight">
               <p className="text-body">Grand Total</p>
               <p className="text-[24px] font-bold leading-8 tracking-[-0.5px]">
-                £ {getTotalInvoicePrice(data.items).toFixed(2)}
+                £ {getTotalInvoicePrice(items).toFixed(2)}
               </p>
             </div>
           </div>
@@ -186,7 +183,7 @@ export default function InvoiceDetails({ params }: InvoiceDetailsProps) {
       </div>
 
       <section className="absolute bottom-0 flex w-full justify-center bg-white px-6 py-5 dark:bg-midnightBlue md:hidden">
-        <InvoiceDetailsActions data={data} />
+        <InvoiceDetailsActions data={invoice} />
       </section>
     </main>
   );
