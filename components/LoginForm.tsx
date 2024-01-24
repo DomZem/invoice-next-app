@@ -1,13 +1,8 @@
 'use client';
 
-import { axiosInstance } from '@/lib/axios';
-import { User } from '@/types';
+import useLoginMutation from '@/hooks/useLoginMutation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
-import axios, { AxiosError } from 'axios';
-import { useRouter } from 'next/navigation';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
+import { useForm } from 'react-hook-form';
 import { LuLoader2 } from 'react-icons/lu';
 import * as z from 'zod';
 import { Button } from './UI/Button';
@@ -33,47 +28,19 @@ const defaultValues: LoginType = {
   password: '',
 };
 
-const login = async (data: LoginType): Promise<User> => {
-  const response = await axiosInstance.post('/auth/login', data, {
-    withCredentials: true,
-  });
-
-  return response.data;
-};
-
 export default function LoginForm() {
+  const { mutate, isPending } = useLoginMutation();
+
   const form = useForm<LoginType>({
     resolver: zodResolver(loginFormSchema),
     defaultValues,
   });
 
-  const router = useRouter();
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: login,
-    onSuccess: () => {
-      router.push('/invoices');
-    },
-    onError: (err: Error | AxiosError) => {
-      if (axios.isAxiosError(err)) {
-        toast.error(
-          `Something went wrong. Error: ${err.response?.data.message}`,
-        );
-      } else {
-        toast.error('Something went wrong. Try maybe later.');
-      }
-    },
-  });
-
-  const onSubmit: SubmitHandler<LoginType> = (data) => {
-    mutate(data);
-  };
-
   return (
     <Form {...form}>
       <form
         method="post"
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit((data) => mutate(data))}
         className="space-y-8"
       >
         <FormField
