@@ -14,9 +14,9 @@ export default function SubmitButtons({
 }: SubmitButtonsProps) {
   return (
     <div className="flex-shrink-0">
-      <div className="bg-shadow h-16 w-full"></div>
+      <div className="h-16 w-full bg-shadow"></div>
       <div
-        className={`flex items-center gap-2 px-6 py-[21px] ${
+        className={`flex items-center gap-2 px-6 py-[23px] ${
           variant === 'create'
             ? 'justify-end md:justify-between'
             : 'justify-end'
