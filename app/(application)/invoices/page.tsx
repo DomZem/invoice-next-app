@@ -8,52 +8,23 @@ import InvoiceList from '@/components/InvoiceList';
 import InvoicePagination from '@/components/InvoicePagination';
 import InvoiceStatusFilter from '@/components/InvoiceStatusFilter';
 import Loading from '@/components/UI/Loading';
-import { axiosInstance } from '@/lib/axios';
-import { FetchInvoice } from '@/types';
-import { useQuery } from '@tanstack/react-query';
+import useInvoicesQuery from '@/hooks/useInvoicesQuery';
 import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 const INVOICES_PER_PAGE = 6;
 
-type FetchPaginationInvoice = {
-  data: FetchInvoice[];
-  meta: {
-    total: number;
-    lastPage: number;
-    currentPage: number;
-    perPage: number;
-    prev: number | null;
-    next: number | null;
-  };
-};
-
-const fetchInvoices = async (page: number) => {
-  const response = await axiosInstance.get<FetchPaginationInvoice>(
-    `/invoice?page=${page}&size=${INVOICES_PER_PAGE}`,
-    {
-      withCredentials: true,
-    },
-  );
-
-  return response.data;
-};
-
 export default function InvoicesPage() {
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get('page') || '1');
+  const { isLoading, error, data } = useInvoicesQuery(page, INVOICES_PER_PAGE);
 
   const [selectedStatuses, setSelectedStatuses] = useState<Status[]>([
     'DRAFT',
     'PENDING',
     'PAID',
   ]);
-
-  const { isLoading, error, data } = useQuery({
-    queryKey: ['invoices', page],
-    queryFn: () => fetchInvoices(page),
-  });
 
   if (isLoading) {
     return (
