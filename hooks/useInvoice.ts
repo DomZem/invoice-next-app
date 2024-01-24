@@ -10,7 +10,7 @@ const fetchInvoiceById = async (id: string): Promise<FetchInvoice> => {
   return response.data;
 };
 
-export default function useInvoiceQuery(id: string) {
+export default function useInvoice(id: string) {
   return useQuery<FetchInvoice>({
     queryFn: () => fetchInvoiceById(id),
     queryKey: ['invoices', id],

@@ -1,29 +1,27 @@
-import { RegisterType } from '@/components/RegisterForm/formSchema';
 import { axiosInstance } from '@/lib/axios';
-import { User } from '@/types';
 import { useMutation } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
-const register = async (data: RegisterType): Promise<User> => {
-  const response = await axiosInstance.post('/auth/register', data, {
+const logout = async (): Promise<{ message: string }> => {
+  const response = await axiosInstance.get('/auth/logout', {
     withCredentials: true,
   });
 
   return response.data;
 };
 
-export default function useRegisterMutation() {
+export default function useLogout() {
   const router = useRouter();
 
   return useMutation({
-    mutationFn: (data: RegisterType) =>
-      toast.promise(register(data), {
-        loading: 'Creating account ...',
-        success: 'Account has been created 🔥',
+    mutationFn: () =>
+      toast.promise(logout(), {
+        loading: 'Logging out ...',
+        success: 'You have been logged out',
         error: (error: Error | AxiosError) => {
-          let message = "Something went wrong. Account hasn't been created";
+          let message = 'Something went wrong. You have not been logged out';
 
           if (axios.isAxiosError(error)) {
             const errorMessage = error.response?.data.message;
@@ -37,7 +35,7 @@ export default function useRegisterMutation() {
         },
       }),
     onSuccess: () => {
-      router.push('/invoices');
+      router.replace('/');
     },
   });
 }

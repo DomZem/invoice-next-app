@@ -1,10 +1,10 @@
 'use client';
 
-import useLogoutMutation from '@/hooks/useLogoutMutation';
+import useLogout from '@/hooks/useLogout';
 import { MdLogout } from 'react-icons/md';
 
 export default function LogoutButton() {
-  const { mutate, isPending } = useLogoutMutation();
+  const { mutate, isPending } = useLogout();
 
   return (
     <button className="p-2" disabled={isPending} onClick={() => mutate()}>

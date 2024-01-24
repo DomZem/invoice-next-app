@@ -1,6 +1,6 @@
 'use client';
 
-import useLoginMutation from '@/hooks/useLoginMutation';
+import useLoginMutation from '@/hooks/useLogin';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { LuLoader2 } from 'react-icons/lu';
@@ -29,12 +29,12 @@ const defaultValues: LoginType = {
 };
 
 export default function LoginForm() {
-  const { mutate, isPending } = useLoginMutation();
-
   const form = useForm<LoginType>({
     resolver: zodResolver(loginFormSchema),
     defaultValues,
   });
+
+  const { mutate, isPending } = useLoginMutation();
 
   return (
     <Form {...form}>

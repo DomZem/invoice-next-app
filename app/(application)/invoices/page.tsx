@@ -8,7 +8,7 @@ import InvoiceList from '@/components/InvoiceList';
 import InvoicePagination from '@/components/InvoicePagination';
 import InvoiceStatusFilter from '@/components/InvoiceStatusFilter';
 import Loading from '@/components/UI/Loading';
-import useInvoicesQuery from '@/hooks/useInvoicesQuery';
+import useInvoices from '@/hooks/useInvoices';
 import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
@@ -18,7 +18,7 @@ const INVOICES_PER_PAGE = 6;
 export default function InvoicesPage() {
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get('page') || '1');
-  const { isLoading, error, data } = useInvoicesQuery(page, INVOICES_PER_PAGE);
+  const { isLoading, error, data } = useInvoices(page, INVOICES_PER_PAGE);
 
   const [selectedStatuses, setSelectedStatuses] = useState<Status[]>([
     'DRAFT',

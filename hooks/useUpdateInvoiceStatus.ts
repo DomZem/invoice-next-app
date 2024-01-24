@@ -20,7 +20,7 @@ const updateInvoiceStatus = async ({
   );
 };
 
-export default function useUpdateInvoiceStatusMutation(status: Status) {
+export default function useUpdateInvoiceStatus(status: Status) {
   const queryClient = useQueryClient();
 
   const nextStatus: Status =

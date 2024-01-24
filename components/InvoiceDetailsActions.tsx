@@ -13,7 +13,7 @@ import {
 } from '@/components/UI/AlertDialog';
 import { Button } from '@/components/UI/Button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/UI/Sheet';
-import useDeleteInvoiceMutation from '@/hooks/useDeleteInvoiceMutation';
+import useDeleteInvoice from '@/hooks/useDeleteInvoice';
 import { FetchInvoice } from '@/types';
 import { useRouter } from 'next/navigation';
 import UpdateInvoice from './InvoiceForm/UpdateInvoice';
@@ -27,7 +27,7 @@ export default function InvoiceDetailsActions({
   data,
 }: InvoiceDetailsActionsProps) {
   const { id, mark, status } = data;
-  const { mutate } = useDeleteInvoiceMutation(id, mark);
+  const { mutate } = useDeleteInvoice(id, mark);
   const router = useRouter();
 
   const handleDeleteInvoice = () => {

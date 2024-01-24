@@ -5,7 +5,7 @@ import InvoiceDetailsActions from '@/components/InvoiceDetailsActions';
 import InvoiceError from '@/components/InvoiceError';
 import InvoiceStatus from '@/components/InvoiceStatus';
 import Loading from '@/components/UI/Loading';
-import useInvoiceQuery from '@/hooks/useInvoiceQuery';
+import useInvoice from '@/hooks/useInvoice';
 import { getPaymentTermDays, getTotalInvoicePrice } from '@/lib/utils';
 import axios from 'axios';
 import { add, format } from 'date-fns';
@@ -18,7 +18,7 @@ interface InvoiceDetailsProps {
 
 export default function InvoiceDetails({ params }: InvoiceDetailsProps) {
   const { id } = params;
-  const { data: invoice, isLoading, error } = useInvoiceQuery(id);
+  const { data: invoice, isLoading, error } = useInvoice(id);
 
   if (isLoading) {
     return (

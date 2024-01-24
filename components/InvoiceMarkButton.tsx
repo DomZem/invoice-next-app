@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/UI/Button';
-import useUpdateInvoiceStatusMutation from '@/hooks/useUpdateInvoiceStatusMutation';
+import useUpdateInvoiceStatus from '@/hooks/useUpdateInvoiceStatus';
 import { Status } from './InvoiceForm/formSchema';
 
 interface InvoiceMarkButtonProps {
@@ -13,7 +13,7 @@ export default function InvoiceMarkButton({
   id,
   status,
 }: InvoiceMarkButtonProps) {
-  const { mutate, isPending } = useUpdateInvoiceStatusMutation(status);
+  const { mutate, isPending } = useUpdateInvoiceStatus(status);
 
   return (
     <Button

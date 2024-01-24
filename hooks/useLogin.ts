@@ -14,7 +14,7 @@ const login = async (data: LoginType): Promise<User> => {
   return response.data;
 };
 
-export default function useLoginMutation() {
+export default function useLogin() {
   const router = useRouter();
 
   return useMutation({

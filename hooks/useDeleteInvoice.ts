@@ -9,7 +9,7 @@ const deleteInvoice = async (id: number) => {
   });
 };
 
-export default function useDeleteInvoiceMutation(id: number, mark: string) {
+export default function useDeleteInvoice(id: number, mark: string) {
   const queryClient = useQueryClient();
 
   return useMutation({

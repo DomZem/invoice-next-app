@@ -1,6 +1,6 @@
 'use client';
 
-import useRegisterMutation from '@/hooks/useRegisterMutation';
+import useRegister from '@/hooks/useRegister';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { LuLoader2 } from 'react-icons/lu';
@@ -26,7 +26,7 @@ export default function RegisterForm({ defaultValues }: RegisterFormProps) {
     defaultValues,
   });
 
-  const { mutate, isPending } = useRegisterMutation();
+  const { mutate, isPending } = useRegister();
 
   return (
     <Form {...form}>

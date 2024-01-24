@@ -25,7 +25,7 @@ const fetchInvoices = async (page: number, size: number) => {
   return response.data;
 };
 
-export default function useInvoicesQuery(page: number, size: number) {
+export default function useInvoices(page: number, size: number) {
   return useQuery({
     queryKey: ['invoices', page],
     queryFn: () => fetchInvoices(page, size),
