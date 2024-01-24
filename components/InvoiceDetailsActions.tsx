@@ -13,12 +13,9 @@ import {
 } from '@/components/UI/AlertDialog';
 import { Button } from '@/components/UI/Button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/UI/Sheet';
-import { axiosInstance } from '@/lib/axios';
+import useDeleteInvoiceMutation from '@/hooks/useDeleteInvoiceMutation';
 import { FetchInvoice } from '@/types';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
-import toast from 'react-hot-toast';
 import UpdateInvoice from './InvoiceForm/UpdateInvoice';
 import InvoiceMarkButton from './InvoiceMarkButton';
 
@@ -26,43 +23,15 @@ interface InvoiceDetailsActionsProps {
   data: FetchInvoice;
 }
 
-const deleteInvoice = async (id: number) => {
-  return axiosInstance.delete(`/invoice/${id}`, {
-    withCredentials: true,
-  });
-};
-
 export default function InvoiceDetailsActions({
   data,
 }: InvoiceDetailsActionsProps) {
-  const queryClient = useQueryClient();
+  const { id, mark, status } = data;
+  const { mutate } = useDeleteInvoiceMutation(id, mark);
   const router = useRouter();
 
-  const { mutate } = useMutation({
-    mutationFn: (id: number) =>
-      toast.promise(deleteInvoice(id), {
-        loading: `Deleting #${data.mark} invoice ...`,
-        success: `Invoice #${data.mark} has been deleted 🔥`,
-        error: (error: Error | AxiosError) => {
-          let message = "Something went wrong. Invoice hasn't been deleted";
-
-          if (axios.isAxiosError(error)) {
-            const errorMessage = error.response?.data.message;
-            if (errorMessage) {
-              return `${message}. Error: ${errorMessage}`;
-            }
-          }
-
-          return message;
-        },
-      }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['invoices', data.id] });
-    },
-  });
-
   const handleDeleteInvoice = () => {
-    mutate(data.id);
+    mutate(id);
     router.back();
   };
 
@@ -88,7 +57,7 @@ export default function InvoiceDetailsActions({
           <AlertDialogHeader>
             <AlertDialogTitle>Confirm Deletion</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete invoice #{data.mark}? This action
+              Are you sure you want to delete invoice #{mark}? This action
               cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
@@ -100,7 +69,7 @@ export default function InvoiceDetailsActions({
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-      <InvoiceMarkButton status={data.status} id={data.id} />
+      <InvoiceMarkButton status={status} id={id} />
     </div>
   );
 }
