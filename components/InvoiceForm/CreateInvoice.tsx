@@ -2,51 +2,17 @@
 
 import { Button } from '@/components/UI/Button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/UI/Sheet';
-import { axiosInstance } from '@/lib/axios';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios, { AxiosError } from 'axios';
-import toast from 'react-hot-toast';
+import useCreateInvoice from '@/hooks/useCreateInvoice';
 import { MdAddCircle } from 'react-icons/md';
 import InvoiceFormTemplate from './InvoiceFormTemplate';
 import { Invoice } from './formSchema';
-
-const createInvoice = async (data: Invoice) => {
-  return axiosInstance.post('/invoice', data, { withCredentials: true });
-};
 
 interface CreateInvoiceProps {
   defaultValues: Invoice;
 }
 
 export default function CreateInvoice({ defaultValues }: CreateInvoiceProps) {
-  const queryClient = useQueryClient();
-
-  const { mutate, isPending, isError } = useMutation({
-    mutationFn: (data: Invoice) =>
-      toast.promise(createInvoice(data), {
-        loading: 'Creating invoice ...',
-        success: `Invoice for ${data.clientName} has been created 🔥`,
-        error: (error: Error | AxiosError) => {
-          let message = "Something went wrong. Invoice hasn't been created";
-
-          if (axios.isAxiosError(error)) {
-            const errorMessage = error.response?.data.message;
-            if (errorMessage) {
-              return `${message}. Error: ${errorMessage}`;
-            }
-          }
-
-          return message;
-        },
-      }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['invoices'] });
-    },
-  });
-
-  const handleCreateInvoice = (data: Invoice) => {
-    mutate(data);
-  };
+  const { mutate, isPending, isSuccess } = useCreateInvoice();
 
   return (
     <Sheet>
@@ -63,9 +29,9 @@ export default function CreateInvoice({ defaultValues }: CreateInvoiceProps) {
         <InvoiceFormTemplate
           variant="create"
           defaultValues={defaultValues}
-          onSubmit={handleCreateInvoice}
+          onSubmit={(data: Invoice) => mutate(data)}
           isPending={isPending}
-          isSuccess={!isPending && !isError}
+          isSuccess={isSuccess}
         />
       </SheetContent>
     </Sheet>
