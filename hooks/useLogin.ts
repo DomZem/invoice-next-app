@@ -22,14 +22,18 @@ export default function useLogin() {
     onSuccess: () => {
       router.push('/invoices');
     },
-    onError: (err: Error | AxiosError) => {
-      if (axios.isAxiosError(err)) {
-        toast.error(
-          `Something went wrong. Error: ${err.response?.data.message}`,
-        );
-      } else {
-        toast.error('Something went wrong. Try maybe later.');
+    onError: (error: Error | AxiosError) => {
+      let message = 'Something went wrong. You have not been logged in';
+
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data.message;
+
+        if (errorMessage) {
+          toast.error(`${message}. Error: ${errorMessage}`);
+        }
       }
+
+      toast.error(message);
     },
   });
 }

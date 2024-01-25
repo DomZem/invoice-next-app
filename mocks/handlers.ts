@@ -6,6 +6,10 @@ export const handlers = [
     return res(ctx.status(200));
   }),
 
+  rest.post(`${API_URL}/auth/login`, (req, res, ctx) => {
+    return res(ctx.status(200));
+  }),
+
   rest.patch(`${API_URL}/invoice/:id`, (req, res, ctx) => {
     return res(ctx.status(200));
   }),

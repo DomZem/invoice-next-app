@@ -1,6 +1,6 @@
 'use client';
 
-import useLoginMutation from '@/hooks/useLogin';
+import useLogin from '@/hooks/useLogin';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { LuLoader2 } from 'react-icons/lu';
@@ -17,7 +17,7 @@ import {
 import { Input } from './UI/Input';
 
 const loginFormSchema = z.object({
-  email: z.string().min(1, { message: 'Required' }),
+  email: z.string().email(),
   password: z.string().min(1, { message: 'Required' }),
 });
 
@@ -34,7 +34,7 @@ export default function LoginForm() {
     defaultValues,
   });
 
-  const { mutate, isPending } = useLoginMutation();
+  const { mutate, isPending } = useLogin();
 
   return (
     <Form {...form}>
