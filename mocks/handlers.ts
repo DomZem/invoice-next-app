@@ -9,4 +9,8 @@ export const handlers = [
   rest.patch(`${API_URL}/invoice/:id`, (req, res, ctx) => {
     return res(ctx.status(200));
   }),
+
+  rest.delete(`${API_URL}/invoice/:id`, (req, res, ctx) => {
+    return res(ctx.status(200));
+  }),
 ];

@@ -27,7 +27,7 @@ export default function InvoiceDetailsActions({
   data,
 }: InvoiceDetailsActionsProps) {
   const { id, mark, status } = data;
-  const { mutate } = useDeleteInvoice(id, mark);
+  const { mutate, isPending } = useDeleteInvoice(id, mark);
   const router = useRouter();
 
   const handleDeleteInvoice = () => {
@@ -63,7 +63,10 @@ export default function InvoiceDetailsActions({
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDeleteInvoice}>
+            <AlertDialogAction
+              disabled={isPending}
+              onClick={handleDeleteInvoice}
+            >
               Delete
             </AlertDialogAction>
           </AlertDialogFooter>
