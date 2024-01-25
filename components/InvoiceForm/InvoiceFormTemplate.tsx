@@ -41,12 +41,15 @@ export default function InvoiceFormTemplate({
     defaultValues,
   });
 
-  const handleFormSubmit = (data: Invoice) => {
-    onSubmit(data);
-
+  const clearInputs = () => {
     if (isSuccess && variant === 'create') {
       methods.reset();
     }
+  };
+
+  const handleFormSubmit = (data: Invoice) => {
+    onSubmit(data);
+    clearInputs();
   };
 
   return (
@@ -104,9 +107,7 @@ export default function InvoiceFormTemplate({
           isPending={isPending}
           onSaveSubmit={methods.handleSubmit((data) => {
             onSubmit({ ...data, status: 'DRAFT' });
-            if (isSuccess) {
-              methods.reset();
-            }
+            clearInputs();
           })}
         />
       </form>

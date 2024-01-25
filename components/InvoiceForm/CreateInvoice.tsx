@@ -12,7 +12,7 @@ interface CreateInvoiceProps {
 }
 
 export default function CreateInvoice({ defaultValues }: CreateInvoiceProps) {
-  const { mutate, isPending, isSuccess } = useCreateInvoice();
+  const { mutate, isPending, isError } = useCreateInvoice();
 
   return (
     <Sheet>
@@ -31,7 +31,7 @@ export default function CreateInvoice({ defaultValues }: CreateInvoiceProps) {
           defaultValues={defaultValues}
           onSubmit={(data: Invoice) => mutate(data)}
           isPending={isPending}
-          isSuccess={isSuccess}
+          isSuccess={!isPending && !isError}
         />
       </SheetContent>
     </Sheet>
