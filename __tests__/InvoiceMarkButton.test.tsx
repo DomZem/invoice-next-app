@@ -62,29 +62,6 @@ describe('InvoiceMarkButton component', () => {
       toast.remove();
     });
 
-    it('should render "Updating invoice status ..." text and disable button when request is loading', async () => {
-      server.use(
-        rest.patch(`${API_URL}/invoice/:id`, (req, res, ctx) => {
-          return res(ctx.delay(300), ctx.status(200));
-        }),
-      );
-
-      render(
-        <TestQueryProvider>
-          <InvoiceMarkButton status="DRAFT" id={1} />
-          <Toaster />
-        </TestQueryProvider>,
-      );
-
-      const button = screen.getByRole('button');
-      await userEvent.click(button);
-
-      expect(button).toBeDisabled();
-      expect(screen.getByRole('status')).toHaveTextContent(
-        'Updating invoice status ...',
-      );
-    });
-
     it('should render "Invoice status has been updated to pending 🔥" text when request is success and prop status is "DRAFT"', async () => {
       render(
         <TestQueryProvider>
@@ -130,6 +107,29 @@ describe('InvoiceMarkButton component', () => {
 
       expect(screen.getByRole('status')).toHaveTextContent(
         'Invoice status has been updated to draft 🔥',
+      );
+    });
+
+    it('should render "Updating invoice status ..." text and disable button when request is loading', async () => {
+      server.use(
+        rest.patch(`${API_URL}/invoice/:id`, (req, res, ctx) => {
+          return res(ctx.delay(300), ctx.status(200));
+        }),
+      );
+
+      render(
+        <TestQueryProvider>
+          <InvoiceMarkButton status="DRAFT" id={1} />
+          <Toaster />
+        </TestQueryProvider>,
+      );
+
+      const button = screen.getByRole('button');
+      await userEvent.click(button);
+
+      expect(button).toBeDisabled();
+      expect(screen.getByRole('status')).toHaveTextContent(
+        'Updating invoice status ...',
       );
     });
 
