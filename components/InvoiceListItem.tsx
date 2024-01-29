@@ -13,7 +13,7 @@ export function InvoiceListItem({
 }: InvoiceListItemProps) {
   return (
     <Link href={`/invoices/${id}`}>
-      <li className="cursor-pointer rounded-lg bg-white p-6 shadow-wrapper dark:bg-midnightBlue md:px-6 md:py-4 lg:px-8">
+      <li className="cursor-pointer rounded-lg bg-white p-6 shadow-wrapper ring-primary duration-200 dark:bg-midnightBlue md:px-6 md:py-4 lg:px-8 lg:hover:ring-[2px]">
         {/* Render on mobile */}
         <div className="flex flex-col gap-6 md:hidden">
           <section className="flex items-center justify-between">

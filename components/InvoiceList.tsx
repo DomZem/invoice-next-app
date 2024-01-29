@@ -30,7 +30,7 @@ export default function InvoiceList({ invoices, statuses }: InvoiceListProps) {
 
   if (invoices.length) {
     result = (
-      <ul className="flex flex-1 flex-col gap-4 overflow-y-auto">
+      <ul className="flex flex-1 flex-col gap-4 overflow-y-auto p-1">
         {invoices.map((invoice) => (
           <InvoiceListItem invoice={invoice} key={invoice.mark} />
         ))}

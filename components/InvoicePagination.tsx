@@ -17,7 +17,7 @@ export default function InvoicePagination({
   const router = useRouter();
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between p-1">
       <p className="text-invoice-detail text-starlessNight dark:text-white">
         Current page: <span data-testid="current-page">{page}</span>
       </p>

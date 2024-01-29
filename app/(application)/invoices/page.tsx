@@ -71,8 +71,8 @@ export default function InvoicesPage() {
   );
 
   return (
-    <main className="mx-auto flex w-full max-w-[730px] flex-col gap-8 overflow-hidden px-6 py-9 md:gap-[55px] md:px-12 md:py-[62px] lg:gap-16 lg:py-[78px]">
-      <section className="flex items-center justify-between">
+    <main className="mx-auto flex w-full max-w-[730px] flex-col gap-8 overflow-hidden px-5 py-7 md:gap-[55px] md:px-12 md:py-[62px] lg:gap-16 lg:py-[78px]">
+      <section className="flex items-center justify-between p-1">
         <InvoiceHeader invoices={filteredInvoices} />
 
         <div className="flex items-center gap-[18px] md:gap-10">
