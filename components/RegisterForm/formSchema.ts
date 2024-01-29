@@ -4,8 +4,8 @@ const passwordMessagePrefix = 'Password must contains at least';
 
 export const registerFormSchema = z
   .object({
-    firstName: z.string().min(1, { message: 'Required' }).max(18),
-    lastName: z.string().min(1, { message: 'Required' }).max(18),
+    firstName: z.string().min(1, { message: 'Required' }).max(50),
+    lastName: z.string().min(1, { message: 'Required' }).max(50),
     email: z.string().email(),
     password: z
       .string()

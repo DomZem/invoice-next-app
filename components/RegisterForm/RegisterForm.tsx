@@ -3,7 +3,6 @@
 import useRegister from '@/hooks/useRegister';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { LuLoader2 } from 'react-icons/lu';
 import { Button } from '../UI/Button';
 import {
   Form,
@@ -46,7 +45,7 @@ export default function RegisterForm({ defaultValues }: RegisterFormProps) {
                   <Input {...field} />
                 </FormControl>
 
-                <FormMessage />
+                <FormMessage data-testid="first-name-error-message" />
               </FormItem>
             )}
           />
@@ -61,7 +60,7 @@ export default function RegisterForm({ defaultValues }: RegisterFormProps) {
                   <Input {...field} />
                 </FormControl>
 
-                <FormMessage />
+                <FormMessage data-testid="last-name-error-message" />
               </FormItem>
             )}
           />
@@ -78,7 +77,7 @@ export default function RegisterForm({ defaultValues }: RegisterFormProps) {
                 <Input {...field} />
               </FormControl>
 
-              <FormMessage />
+              <FormMessage data-testid="address-email-error-message" />
             </FormItem>
           )}
         />
@@ -94,7 +93,7 @@ export default function RegisterForm({ defaultValues }: RegisterFormProps) {
                 <Input {...field} type="password" />
               </FormControl>
 
-              <FormMessage />
+              <FormMessage data-testid="password-error-message" />
             </FormItem>
           )}
         />
@@ -110,7 +109,7 @@ export default function RegisterForm({ defaultValues }: RegisterFormProps) {
                 <Input {...field} type="password" />
               </FormControl>
 
-              <FormMessage />
+              <FormMessage data-testid="confirm-password-error-message" />
             </FormItem>
           )}
         />
@@ -126,7 +125,7 @@ export default function RegisterForm({ defaultValues }: RegisterFormProps) {
                 <Input {...field} type="url" />
               </FormControl>
 
-              <FormMessage />
+              <FormMessage data-testid="avatar-link-error-message" />
             </FormItem>
           )}
         />
@@ -136,10 +135,7 @@ export default function RegisterForm({ defaultValues }: RegisterFormProps) {
           type="submit"
           disabled={isPending}
         >
-          {isPending && (
-            <LuLoader2 className="mr-2 animate-spin text-base font-bold" />
-          )}
-          {isPending ? 'Processing ...' : 'Submit'}
+          Submit
         </Button>
       </form>
     </Form>
