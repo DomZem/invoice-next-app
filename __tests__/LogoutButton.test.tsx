@@ -22,29 +22,6 @@ describe('LogoutButton component', () => {
       toast.remove();
     });
 
-    it('should render "Logging out ..." text and disable button when request is loading', async () => {
-      server.use(
-        rest.get(`${API_URL}/auth/logout`, (req, res, ctx) => {
-          return res(ctx.delay(300), ctx.status(200));
-        }),
-      );
-
-      render(
-        <TestQueryProvider>
-          <LogoutButton />
-          <Toaster />
-        </TestQueryProvider>,
-      );
-
-      const logoutButton = screen.getByRole('button', {
-        name: '',
-      });
-      await userEvent.click(logoutButton);
-
-      expect(screen.getByRole('status')).toHaveTextContent('Logging out ...');
-      expect(logoutButton).toBeDisabled();
-    });
-
     it('should render "You have been logged out" text when request is success', async () => {
       render(
         <TestQueryProvider>
@@ -85,6 +62,29 @@ describe('LogoutButton component', () => {
       expect(screen.getByRole('status')).toHaveTextContent(
         'Something went wrong. You have not been logged out',
       );
+    });
+
+    it('should render "Logging out ..." text and disable button when request is loading', async () => {
+      server.use(
+        rest.get(`${API_URL}/auth/logout`, (req, res, ctx) => {
+          return res(ctx.delay(300), ctx.status(200));
+        }),
+      );
+
+      render(
+        <TestQueryProvider>
+          <LogoutButton />
+          <Toaster />
+        </TestQueryProvider>,
+      );
+
+      const logoutButton = screen.getByRole('button', {
+        name: '',
+      });
+      await userEvent.click(logoutButton);
+
+      expect(screen.getByRole('status')).toHaveTextContent('Logging out ...');
+      expect(logoutButton).toBeDisabled();
     });
   });
 });

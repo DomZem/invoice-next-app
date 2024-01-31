@@ -77,24 +77,6 @@ describe('UpdateInvoice component', () => {
       );
     });
 
-    it(`should render "Upadting #${mark} invoice ..." text when request is loading after click "Save Changes" submit button`, async () => {
-      server.use(
-        rest.put(`${API_URL}/invoice/:id`, (req, res, ctx) => {
-          return res(ctx.delay(200));
-        }),
-      );
-
-      // submit form
-      const saveChangesButton = screen.getByRole('button', {
-        name: /Save Changes/i,
-      });
-      await userEvent.click(saveChangesButton);
-
-      expect(screen.getByRole('status')).toHaveTextContent(
-        `Upadting #${mark} invoice ...`,
-      );
-    });
-
     it(`should render "Something went wrong. Invoice hasn't been updated" text when request is failed after click "Save Changes" submit button`, async () => {
       server.use(
         rest.put(`${API_URL}/invoice/:id`, (req, res, ctx) => {
@@ -110,6 +92,24 @@ describe('UpdateInvoice component', () => {
 
       expect(screen.getByRole('status')).toHaveTextContent(
         "Something went wrong. Invoice hasn't been updated",
+      );
+    });
+
+    it(`should render "Upadting #${mark} invoice ..." text when request is loading after click "Save Changes" submit button`, async () => {
+      server.use(
+        rest.put(`${API_URL}/invoice/:id`, (req, res, ctx) => {
+          return res(ctx.delay(200));
+        }),
+      );
+
+      // submit form
+      const saveChangesButton = screen.getByRole('button', {
+        name: /Save Changes/i,
+      });
+      await userEvent.click(saveChangesButton);
+
+      expect(screen.getByRole('status')).toHaveTextContent(
+        `Upadting #${mark} invoice ...`,
       );
     });
   });

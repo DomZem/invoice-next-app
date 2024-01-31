@@ -30,6 +30,7 @@ export default function useLogin() {
 
         if (errorMessage) {
           toast.error(`${message}. Error: ${errorMessage}`);
+          return;
         }
       }
 

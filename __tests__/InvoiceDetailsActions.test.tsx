@@ -126,37 +126,6 @@ describe('InvoiceDetailsActions component', () => {
       );
     });
 
-    it(`should render "Deleting #${mark} invoice ..." text when request is loading`, async () => {
-      server.use(
-        rest.delete(`${API_URL}/invoice/:id`, (req, res, ctx) => {
-          return res(ctx.delay(200));
-        }),
-      );
-
-      render(
-        <TestQueryProvider>
-          <InvoiceDetailsActions data={invoice} />
-          <Toaster />
-        </TestQueryProvider>,
-      );
-
-      // open modal
-      const deleteButton = screen.getByRole('button', {
-        name: /Delete/i,
-      });
-      await userEvent.click(deleteButton);
-
-      // delete invoice
-      const deleteModalButton = screen.getByRole('button', {
-        name: /Delete/i,
-      });
-      await userEvent.click(deleteModalButton);
-
-      expect(screen.getByRole('status')).toHaveTextContent(
-        `Deleting #${mark} invoice ...`,
-      );
-    });
-
     it(`should render "Something went wrong. Invoice hasn't been deleted" text when request is failed`, async () => {
       server.use(
         rest.delete(`${API_URL}/invoice/:id`, (req, res, ctx) => {
@@ -185,6 +154,37 @@ describe('InvoiceDetailsActions component', () => {
 
       expect(screen.getByRole('status')).toHaveTextContent(
         "Something went wrong. Invoice hasn't been deleted",
+      );
+    });
+
+    it(`should render "Deleting #${mark} invoice ..." text when request is loading`, async () => {
+      server.use(
+        rest.delete(`${API_URL}/invoice/:id`, (req, res, ctx) => {
+          return res(ctx.delay(200));
+        }),
+      );
+
+      render(
+        <TestQueryProvider>
+          <InvoiceDetailsActions data={invoice} />
+          <Toaster />
+        </TestQueryProvider>,
+      );
+
+      // open modal
+      const deleteButton = screen.getByRole('button', {
+        name: /Delete/i,
+      });
+      await userEvent.click(deleteButton);
+
+      // delete invoice
+      const deleteModalButton = screen.getByRole('button', {
+        name: /Delete/i,
+      });
+      await userEvent.click(deleteModalButton);
+
+      expect(screen.getByRole('status')).toHaveTextContent(
+        `Deleting #${mark} invoice ...`,
       );
     });
   });
