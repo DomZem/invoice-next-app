@@ -1,6 +1,6 @@
 'use client';
 
-import useRegister from '@/hooks/useRegister';
+import useRegister from '@/hooks/auth/useRegister';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Button } from '../UI/Button';

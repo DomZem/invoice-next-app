@@ -5,7 +5,7 @@ import InvoiceDetailsActions from '@/components/InvoiceDetailsActions';
 import InvoiceError from '@/components/InvoiceError';
 import InvoiceStatus from '@/components/InvoiceStatus';
 import Loading from '@/components/UI/Loading';
-import useInvoice from '@/hooks/useInvoice';
+import useInvoice from '@/hooks/invoice/useInvoice';
 import { getPaymentTermDays, getTotalInvoicePrice } from '@/lib/utils';
 import axios from 'axios';
 import { add, format } from 'date-fns';

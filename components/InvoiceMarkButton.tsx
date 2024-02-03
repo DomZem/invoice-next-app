@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/UI/Button';
-import useUpdateInvoiceStatus from '@/hooks/useUpdateInvoiceStatus';
+import useUpdateInvoiceStatus from '@/hooks/invoice/useUpdateInvoiceStatus';
 import { Status } from './InvoiceForm/formSchema';
 
 interface InvoiceMarkButtonProps {

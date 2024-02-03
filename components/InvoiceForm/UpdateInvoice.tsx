@@ -1,4 +1,4 @@
-import useUpdateInvoice from '@/hooks/useUpdateInvoice';
+import useUpdateInvoice from '@/hooks/invoice/useUpdateInvoice';
 import { FetchInvoice } from '@/types';
 import InvoiceFormTemplate from './InvoiceFormTemplate';
 import { Invoice } from './formSchema';

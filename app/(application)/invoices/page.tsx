@@ -8,7 +8,7 @@ import InvoiceList from '@/components/InvoiceList';
 import InvoicePagination from '@/components/InvoicePagination';
 import InvoiceStatusFilter from '@/components/InvoiceStatusFilter';
 import Loading from '@/components/UI/Loading';
-import useInvoices from '@/hooks/useInvoices';
+import useInvoices from '@/hooks/invoice/useInvoices';
 import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';

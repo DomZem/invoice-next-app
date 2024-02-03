@@ -1,6 +1,6 @@
 'use client';
 
-import useUser from '@/hooks/useUser';
+import useUser from '@/hooks/auth/useUser';
 import { FaUser } from 'react-icons/fa';
 import { Avatar, AvatarFallback, AvatarImage } from './UI/Avatar';
 import Loading from './UI/Loading';

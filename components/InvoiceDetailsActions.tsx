@@ -13,7 +13,7 @@ import {
 } from '@/components/UI/AlertDialog';
 import { Button } from '@/components/UI/Button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/UI/Sheet';
-import useDeleteInvoice from '@/hooks/useDeleteInvoice';
+import useDeleteInvoice from '@/hooks/invoice/useDeleteInvoice';
 import { FetchInvoice } from '@/types';
 import { useRouter } from 'next/navigation';
 import UpdateInvoice from './InvoiceForm/UpdateInvoice';

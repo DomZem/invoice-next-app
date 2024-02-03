@@ -1,6 +1,6 @@
 'use client';
 
-import useLogin from '@/hooks/useLogin';
+import useLogin from '@/hooks/auth/useLogin';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { LuLoader2 } from 'react-icons/lu';

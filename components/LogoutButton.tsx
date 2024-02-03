@@ -1,6 +1,6 @@
 'use client';
 
-import useLogout from '@/hooks/useLogout';
+import useLogout from '@/hooks/auth/useLogout';
 import { MdLogout } from 'react-icons/md';
 
 export default function LogoutButton() {

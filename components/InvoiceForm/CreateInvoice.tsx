@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/UI/Button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/UI/Sheet';
-import useCreateInvoice from '@/hooks/useCreateInvoice';
+import useCreateInvoice from '@/hooks/invoice/useCreateInvoice';
 import { MdAddCircle } from 'react-icons/md';
 import InvoiceFormTemplate from './InvoiceFormTemplate';
 import { Invoice } from './formSchema';
