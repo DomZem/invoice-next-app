@@ -40,6 +40,13 @@ Here're some of the project's best features:
 * Responsive on mobile device
 * Dark theme
 
+<h2>🚀 Credentials</h2>
+
+If you want to check the app immediately, you can use that example account: <br />
+
+- Address email: tester@gmail.com
+- Password: zaq1@WSX
+
 <h2>🛠️ Installation Steps:</h2>
 <p>⚠️ Before you run these commands make sure you run your backend server. <br /> 
 You can do that by using that repo: https://github.com/DomZem/invoice-nest-api. I described there step by step what to do. <br />
