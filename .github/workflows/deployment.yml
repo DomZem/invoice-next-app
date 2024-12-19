@@ -13,7 +13,7 @@ jobs:
       - name: Run tests
         run: npm test
   deploy:
-    rund-on: ubuntu-latest
+    runs-on: ubuntu-latest
     needs: test
     steps:
       - name: Get code
